@@ -26,6 +26,7 @@
     "fastify": "^3.15.1"
   },
   "devDependencies": {
+    "pino-pretty": "^4.8.0",
     "standard": "^16.0.3"
   }
 }
