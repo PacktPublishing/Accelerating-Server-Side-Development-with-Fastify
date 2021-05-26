@@ -6,7 +6,7 @@ const serverOptions = { // [2]: define some settings for the server
 }
 const app = fastify(serverOptions) // [3]: instantiate the application
 
-app.addHook('onRoute', function inspector(routeOptions) {
+app.addHook('onRoute', function parentHook(routeOptions) {
   console.log(routeOptions)
 })
 
@@ -34,6 +34,32 @@ app.setNotFoundHandler(function custom404(request, reply) {
     message: 'URL not found'
   }
   reply.send(payload)
+})
+
+app.route({
+  url: '/hello',
+  method: 'GET',
+  handler: function myHandler(request, reply) {
+    reply.send('world')
+  }
+})
+
+pluginInstance.addHook('onRoute', function inspector(routeOptions) {
+  console.log('onRoute root called from ' + routeOptions.path) // [1]
+})
+
+app.register(async function pluginOne(pluginInstance, opts) {
+  pluginInstance.addHook('onRoute', function hookA(routeOptions) {
+    console.log('onRoute one called from ' + routeOptions.path) // [2]
+  })
+  pluginInstance.get('/one', async () => 'one')
+})
+
+app.register(async function pluginTwo(pluginInstance, opts) {
+  pluginInstance.addHook('onRoute', function hookB(routeOptions) {
+    console.log('onRoute two called from ' + routeOptions.path) // [3]
+  })
+  pluginInstance.get('/two', async () => 'two')
 })
 
 await app.listen({

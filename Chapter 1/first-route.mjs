@@ -1,6 +1,8 @@
 import fastify from 'fastify' // [1]: import the framework
 const serverOptions = { // [2]: define some settings for the server
-  level: 'debug'
+  logger: {
+    level: 'debug'
+  }
 }
 const app = fastify(serverOptions) // [3]: instantiate the application
 
