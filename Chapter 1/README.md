@@ -1,32 +1,43 @@
 
 Options
-  http2
+  logger
+  requestIdLogLabel
+  disableRequestLogging
+  requestIdHeader
+  genReqId
+
+  clientErrorHandler
+  frameworkErrors
+  return503OnClosing
+
   https
-  connectionTimeout
+  
+  trustProxy
+  
   keepAliveTimeout
+  connectionTimeout
+  http2SessionTimeout
+  pluginTimeout
+  
+  caseSensitive
   ignoreTrailingSlash
+  constraints
+  exposeHeadRoutes
+  rewriteUrl
+  
   maxParamLength
   bodyLimit
+  
+  http2
+  
+  querystringParser
+  ajv
+  
+  serverFactory
+  
+  
   onProtoPoisoning
   onConstructorPoisoning
-  logger
-  disableRequestLogging
-  serverFactory
-  caseSensitive
-  requestIdHeader
-  requestIdLogLabel
-  genReqId
-  trustProxy
-  pluginTimeout
-  querystringParser
-  exposeHeadRoutes
-  constraints
-  return503OnClosing
-  ajv
-  http2SessionTimeout
-  frameworkErrors
-  clientErrorHandler
-  rewriteUrl
 
 Server Properties
   server
