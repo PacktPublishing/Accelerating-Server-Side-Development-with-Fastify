@@ -48,34 +48,47 @@ Server Properties
   prefix
 
 Server Methods
+  decorate*
+  addHook
+  register
+  route
   after
   ready
   listen
+  inject
+  close
+
+  routing
+  
   getDefaultRoute
   setDefaultRoute
-  routing
-  route
-  close
-  decorate*
-  register
-  addHook
-  inject
+
+  addContentTypeParser
+
   addSchema
   getSchemas
   getSchema
-  setReplySerializer
-  setValidatorCompiler
-  setSchemaErrorFormatter
-  setSerializerCompiler
-  validatorCompiler
-  serializerCompiler
+
   schemaErrorFormatter
+  setSchemaErrorFormatter
+
+  validatorCompiler
+  setValidatorCompiler
+
+  serializerCompiler
+  setSerializerCompiler
+
   schemaController
+
+  setReplySerializer
+
   setNotFoundHandler
   setErrorHandler
+  
   printRoutes
   printPlugins
-  addContentTypeParser
+
   getDefaultJsonParser
   defaultTextParser
+
   errorHandler
