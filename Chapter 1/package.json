@@ -1,0 +1,32 @@
+{
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-1",
+  "version": "1.0.0",
+  "description": "Accelerate Web Development with Fastify - chapter 1, published by Packt",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "lint:fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PacktPublishing/Accelerate-Web-Development-with-Fastify.git"
+  },
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "keywords": [],
+  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PacktPublishing/Accelerate-Web-Development-with-Fastify/issues"
+  },
+  "homepage": "https://github.com/PacktPublishing/Accelerate-Web-Development-with-Fastify#readme",
+  "dependencies": {
+    "fastify": "^3.20.1"
+  },
+  "devDependencies": {
+    "pino-pretty": "^4.8.0",
+    "standard": "^16.0.3"
+  }
+}
