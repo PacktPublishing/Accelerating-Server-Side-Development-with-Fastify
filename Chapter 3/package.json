@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/PacktPublishing/Accelerate-Web-Development-with-Fastify#readme",
   "dependencies": {
-    "fastify": "^3.20.1"
+    "fastify": "^3.20.1",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "pino-pretty": "^4.8.0",
