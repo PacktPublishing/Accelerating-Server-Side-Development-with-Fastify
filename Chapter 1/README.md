@@ -1,81 +1,26 @@
 
-Options
-  logger
-  requestIdLogLabel
-  disableRequestLogging
-  requestIdHeader
-  genReqId
+# Chapter 1 - What is Fastify?
 
-  clientErrorHandler
-  frameworkErrors
-  return503OnClosing
+In this chapter we will learn about the core concepts of Fastify, getting a complete overview of the
+components of the framework.
+You will understand how they work together and how to declare them.
 
-  https
-  
-  trustProxy
-  
-  keepAliveTimeout
-  connectionTimeout
-  http2SessionTimeout
-  pluginTimeout
-  
-  caseSensitive
-  ignoreTrailingSlash
-  constraints
-  exposeHeadRoutes
-  rewriteUrl
-  
-  maxParamLength
-  bodyLimit
-  
-  http2
-  
-  querystringParser
-  ajv
-  
-  serverFactory
-  
-  
-  onProtoPoisoning
-  onConstructorPoisoning
+The example we will use is a simple test routes to become confidend with the Fastify's syntax and execution, so HAVE FUN!
 
-Server Properties
-  server
-  log
-  initialConfig
-  pluginName
-  version
-  prefix
+## How to use this folder?
 
-Server Methods
-  after
-  ready
-  listen
-  getDefaultRoute
-  setDefaultRoute
-  routing
-  route
-  close
-  decorate*
-  register
-  addHook
-  inject
-  addSchema
-  getSchemas
-  getSchema
-  setReplySerializer
-  setValidatorCompiler
-  setSchemaErrorFormatter
-  setSerializerCompiler
-  validatorCompiler
-  serializerCompiler
-  schemaErrorFormatter
-  schemaController
-  setNotFoundHandler
-  setErrorHandler
-  printRoutes
-  printPlugins
-  addContentTypeParser
-  getDefaultJsonParser
-  defaultTextParser
-  errorHandler
+In this folder you will find the source code of the chapter.
+The filenames are the same as the chapter's sections.
+
+You can run the chapter's code examples by executing:
+
+```bash
+node <filename>
+```
+
+Before running the code examples, you need to install the dependencies running `npm install`.
+
+## Trouble?
+
+If you encounter any problems while reading the chapter or while running the code examples,
+you can ask for help on the [official Discord chat](TODO) TODO LINK 
