@@ -1,3 +1,4 @@
+'use strict'
 const fastify = require('fastify')
 
 const app = fastify({
@@ -21,7 +22,7 @@ app.post('/cat', function saveCat (request, reply) {
 
 app.get('/cat/:catName', function readCat (request, reply) {
   const lookingFor = request.params.catName
-  const result = cats.find(cat => cat.name == lookingFor)
+  const result = cats.find(cat => cat.name === lookingFor)
   if (result) {
     reply.send({ cat: result })
   } else {
