@@ -1,3 +1,4 @@
+'use strict'
 const fastify = require('fastify')
 const app = fastify({
   ignoreTrailingSlash: false, // PLAY with this setting: set it to `true`
