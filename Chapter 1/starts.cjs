@@ -1,3 +1,4 @@
+'use strict'
 const fastify = require('fastify') // [1]
 const serverOptions = { // [2]
   logger: true
