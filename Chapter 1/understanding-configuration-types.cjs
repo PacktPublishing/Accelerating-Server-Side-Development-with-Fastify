@@ -1,3 +1,4 @@
+'use strict'
 const fastify = require('fastify')
 const environment = process.env.NODE_ENV // [1]
 
