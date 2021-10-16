@@ -56,3 +56,4 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+!package-lock.json
