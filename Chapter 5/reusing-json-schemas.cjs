@@ -3,34 +3,14 @@
 const fastify = require('fastify')
 
 const app = fastify({
-  logger: true
-})
-app.addSchema({
-  $id: 'http://myapp.com/string.json',
-  type: 'string',
-  maxLength: 50
-})
-
-app.setValidatorCompiler(myValidatorCompiler) // [1]
-
-app.register(async function plugin (instance, opts, next) {
-  instance.setValidatorCompiler(myValidatorCompiler) // [2]
-
-  app.post('/schema-ref', {
-    handler: echo,
-    validatorCompiler: myValidatorCompiler, // [3]
-    schema: {
-      body: mySchema
+  logger: true,
+  ajv: {
+    customOptions: {
+      coerceTypes: 'array',
+      removeAdditional: 'all'
     }
-  })
-})
-
-function myValidatorCompiler (routeData) {
-  const { schema, method, url, httpPart } = routeData
-  return function validate (jsonPayload) {
-    return true
   }
-}
+})
 
 app.addSchema({
   $id: 'http://myapp.com/user.json',
@@ -58,12 +38,12 @@ app.post('/schema-ref', {
     body: {
       type: 'object',
       properties: {
-        user: { $ref: 'http://myapp.com/user.json#usermodel' },
-        homeAdr: { $ref: 'http://myapp.com/address.json#house' },
+        user: { $ref: 'http://myapp.com/user.json#usermodel' }, // [1]
+        homeAdr: { $ref: 'http://myapp.com/address.json#house' }, // [2]
         jobAdr: {
-          $ref: 'http://myapp.com/address.json#/definitions/work'
+          $ref: 'http://myapp.com/address.json#/definitions/work' // [3]
         },
-        notes: { $ref: '#/definitions/local' }
+        notes: { $ref: '#/definitions/local' } // [4]
       },
       definitions: {
         local: { type: 'boolean' }

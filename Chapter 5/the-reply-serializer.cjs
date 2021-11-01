@@ -7,14 +7,10 @@ function mySerializer (payload, statusCode) {
   return `<payload>${payload}</payload>`
 }
 
-// app.setReplySerializer(mySerializer)
-// app.get('/reply-serializer-instance', function handler (request, reply) {
-//   reply.send({ hello: 'world' })
-// })
-
+app.setReplySerializer(mySerializer) // [1]
 app.get('/reply-serializer', function handler (request, reply) {
-  reply/// .type('application/xml')
-    .serializer(mySerializer)
+  reply.type('application/xml')
+    .serializer(mySerializer) // [2]
     .send({ hello: 'world' })
 })
 

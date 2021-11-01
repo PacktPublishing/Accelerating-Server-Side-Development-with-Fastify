@@ -1,7 +1,7 @@
 
 # Chapter 5 - Validation and Serialization
 
-TODO
+You will learn how to validate input data and serialize the output data.
 
 The example we will use is a simple test routes to become confidend with the Fastify's syntax and execution, so HAVE FUN!
 

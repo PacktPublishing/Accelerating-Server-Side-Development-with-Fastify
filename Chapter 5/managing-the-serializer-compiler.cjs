@@ -1,9 +1,8 @@
-
 'use strict'
-
 const fastify = require('fastify')
 
 const app = fastify({
+  logger: true,
   serializerOpts: { rounding: 'ceil' },
   schemaController: {
     compilersFactory: {
@@ -19,23 +18,23 @@ function myFactory (externalSchemas, serializerOptsServerOption) {
   return mySerializerCompiler // [2]
 }
 function mySerializerCompiler (routeData) {
+  // eslint-disable-next-line
   const { schema, method, url, httpStatus } = routeData // [3]
-  return function serializer (responsePayload) {
+  return function serializer (responsePayload) { // [4]
     return `This is the payload ${responsePayload}`
   }
 }
 
-app.setSerializerCompiler(mySerializerCompiler) // [1]
-app.register(async function plugin (instance, opts) {
-  instance.setSerializerCompiler(mySerializerCompiler) // [2]
-  app.post('/respose-schema', {
-    handler: echo,
-    serializerCompiler: mySerializerCompiler, // [3]
-    schema: {
-      response: {
-        '2xx': mySchema,
-        '5xx': myErrorSchema
+app.get('/serializer-compiler', {
+  schema: {
+    response: {
+      200: {
+        $ref: 'http://myapp.com/string.json'
       }
     }
-  })
+  }
+}, function handler (request, reply) {
+  reply.send({ hello: 'world' })
 })
+
+app.listen(8080)

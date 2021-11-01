@@ -12,6 +12,13 @@ app.register(async (instance, opts) => {
     type: 'string',
     maxLength: 50
   })
+
+  instance.get('/single-schema', () => {
+    return instance.getSchema('http://myapp.com/user.json')
+  })
+  instance.get('/all-schemas', () => {
+    return instance.getSchemas()
+  })
 })
 app.register(async (instance, opts) => {
   instance.addSchema({
@@ -20,13 +27,12 @@ app.register(async (instance, opts) => {
     maxLength: 50
   })
 
-  const json = instance.getSchema('http://myapp.com/user.json')
-  const jsonIdSchemaPair = instance.getSchemas()
-
-  console.log({
-    json,
-    jsonIdSchemaPair
+  instance.get('/single-schema', () => {
+    return instance.getSchema('http://myapp.com/user.json')
   })
-})
+  instance.get('/all-schemas', () => {
+    return instance.getSchemas()
+  })
+}, { prefix: '/child' })
 
 app.listen(8080)

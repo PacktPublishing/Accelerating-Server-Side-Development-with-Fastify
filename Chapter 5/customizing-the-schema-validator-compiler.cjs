@@ -6,12 +6,12 @@ const Joi = require('joi')
 const app = fastify({
   logger: true
 })
+
 app.register(async function plugin (instance, opts) {
   function joiCompiler ({ schema, method, url, httpPart }) {
     return function (data) { return schema.validate(data) }
   }
   instance.setValidatorCompiler(joiCompiler)
-
   instance.post('/joi', {
     handler: echo,
     schema: {
@@ -20,17 +20,6 @@ app.register(async function plugin (instance, opts) {
       })
     }
   })
-})
-
-app.post('/not-joi', {
-  handler: echo,
-  schema: {
-    type: 'object',
-    properties: {
-      hello: { type: 'string' }
-    },
-    required: ['hello']
-  }
 })
 
 app.listen(8080)

@@ -1,10 +1,7 @@
 'use strict'
-
 const fastify = require('fastify')
 
-const app = fastify({
-  logger: true
-})
+const app = fastify({ logger: true })
 
 app.post('/filter', {
   async handler (request, reply) {
@@ -14,7 +11,7 @@ app.post('/filter', {
     }
   },
   schema: {
-    respose: {
+    response: {
       '2xx': {
         type: 'object',
         properties: {

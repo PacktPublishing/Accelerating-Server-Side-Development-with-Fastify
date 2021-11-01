@@ -25,8 +25,7 @@
   "dependencies": {
     "ajv-keywords": "^3.5.2",
     "fastify": "^3.21.0",
-    "joi": "^17.4.2",
-    "yup": "^0.32.9"
+    "joi": "^17.4.2"
   },
   "devDependencies": {
     "pino-pretty": "^4.8.0",
