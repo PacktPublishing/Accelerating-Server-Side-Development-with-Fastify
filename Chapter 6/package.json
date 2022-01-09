@@ -1,0 +1,37 @@
+{
+  "name": "chapter-6",
+  "version": "1.0.0",
+  "description": "My first Fastify application",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "pretest": "npm run lint",
+    "test": "tap test/**/*.test.js --no-check-coverage",
+    "start": "fastify start -l info --options app.js",
+    "dev": "npm run start -- --watch --pretty-logs --debug",
+    "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:5",
+    "mongo:stop": "docker container stop fastify-mongo"
+  },
+  "keywords": [],
+  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^3.0.0",
+    "fastify-autoload": "^3.3.1",
+    "fastify-cli": "^2.13.0",
+    "fastify-cors": "^6.0.2",
+    "fastify-env": "^2.1.1",
+    "fastify-mongodb": "^4.1.1",
+    "fastify-plugin": "^3.0.0",
+    "fastify-sensible": "^3.1.0",
+    "fastify-swagger": "^4.12.4"
+  },
+  "devDependencies": {
+    "standard": "^16.0.4",
+    "tap": "^15.0.9"
+  }
+}
