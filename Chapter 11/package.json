@@ -1,0 +1,29 @@
+{
+  "name": "chapter-11",
+  "version": "1.0.0",
+  "description": "Meaningful Application logging",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "pretest": "npm run lint",
+    "test": "tap test/**/*.test.js --no-check-coverage",
+    "start": "fastify start -l info --options app.js",
+    "dev": "npm run start -- --watch --pretty-logs --debug"
+  },
+  "keywords": [],
+  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^3.0.0",
+    "pino": "^7.6.5"
+  },
+  "devDependencies": {
+    "pino-pretty": "^7.5.1",
+    "standard": "^16.0.4",
+    "tap": "^15.0.9"
+  }
+}
