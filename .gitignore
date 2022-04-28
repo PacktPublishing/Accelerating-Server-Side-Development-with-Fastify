@@ -63,6 +63,7 @@ typings/
 .coveralls.yml
 
 package-lock.json
+!Chapter 9/package-lock.json
 
 demo/*
 

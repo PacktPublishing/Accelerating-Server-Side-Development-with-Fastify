@@ -1,10 +1,10 @@
 'use strict'
 
 const { test } = require('tap')
-const { build } = require('../helper')
+const { buildApp } = require('../helper')
 
 test('default root route', async (t) => {
-  const app = build(t)
+  const app = await buildApp(t)
 
   const res = await app.inject({
     url: '/'

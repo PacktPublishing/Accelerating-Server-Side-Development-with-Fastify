@@ -15,7 +15,7 @@ module.exports = async function (fastify, opts) {
     ignorePattern: /.*.no-load\.js/,
     // ignorePattern: /^((?!load\.js).)*$/,
     indexPattern: /^no$/i,
-    options: { ...opts }
+    options: Object.assign({}, opts)
   })
 
   fastify.register(AutoLoad, {

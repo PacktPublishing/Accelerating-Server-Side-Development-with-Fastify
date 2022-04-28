@@ -10,7 +10,9 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "pretest": "npm run lint",
-    "test": "tap test/**/*.test.js --no-check-coverage",
+    "test": "tap --before=test/run-before.js test/**/**.test.js --after=test/run-after.js --no-check-coverage",
+    "test:nostop": "tap --before=test/before.js test/**/**.test.js --no-check-coverage",
+    "test:coverage": "tap --coverage-report=html --before=test/run-before.js test/**/**.test.js --after=test/run-after.js",
     "start": "fastify start -l info --options app.js",
     "dev": "npm run start -- --watch --pretty-logs --debug",
     "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:5",
@@ -22,7 +24,7 @@
   "dependencies": {
     "fastify": "^3.0.0",
     "fastify-autoload": "^3.3.1",
-    "fastify-cli": "^2.13.0",
+    "fastify-cli": "^2.15.0",
     "fastify-cors": "^6.0.2",
     "fastify-env": "^2.1.1",
     "fastify-mongodb": "^4.1.1",
@@ -31,6 +33,7 @@
     "fastify-swagger": "^4.12.4"
   },
   "devDependencies": {
+    "dockerode": "^3.3.1",
     "standard": "^16.0.4",
     "tap": "^15.0.9"
   }
