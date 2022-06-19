@@ -27,7 +27,7 @@ function handlerFunction (request, reply) {
 /* NAMED FUNCTION */
 function business (request, reply) {
   // `this` is the Fastify application instance
-  reply.send({ helloFrom: this.server.address() })
+  return { helloFrom: this.server.address() }
 }
 app.get('/server', business)
 

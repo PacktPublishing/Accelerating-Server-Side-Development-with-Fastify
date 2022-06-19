@@ -4,7 +4,9 @@ const fastify = require('fastify')
 const app = fastify({
   logger: {
     level: 'debug',
-    prettyPrint: true
+    transport: {
+      target: 'pino-pretty'
+    }
   },
   disableRequestLogging: true,
   requestIdLogLabel: 'reqId',
@@ -17,7 +19,7 @@ const app = fastify({
 const cats = []
 app.post('/cat', function saveCat (request, reply) {
   cats.push(request.body)
-  reply.code(201).send({ allCats: cats })
+  return { allCats: cats }
 })
 
 app.get('/cat/:catName', function readCat (request, reply) {
@@ -26,19 +28,20 @@ app.get('/cat/:catName', function readCat (request, reply) {
   if (result) {
     reply.send({ cat: result })
   } else {
-    reply.code(404).send(new Error(`cat ${lookingFor} not found`))
+    reply.code(404)
+    throw new Error(`cat ${lookingFor} not found`)
   }
 })
 
-app.get('/cat/:catIndex(\\d+)', function readCat (request, reply) {
-  const lookingFor = request.params.catIndex
-  const result = cats[lookingFor]
-  if (result) {
-    reply.send({ cat: result })
-    return
-  }
-  reply.send('CAT NOT FOUND')
-})
+// uncomment this to continue the chapter's example
+// app.get('/cat/:catIndex(\\d+)', function readCat (request, reply) {
+//   const lookingFor = request.params.catIndex
+//   const result = cats[lookingFor]
+//   if (result) {
+//     return { cat: result }
+//   }
+//   return 'CAT NOT FOUND'
+// })
 
 app.get('/cat/*', function sendCats (request, reply) {
   reply.send({ allCats: cats })

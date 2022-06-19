@@ -4,7 +4,9 @@ const fastify = require('fastify')
 const app = fastify({
   logger: {
     level: 'debug',
-    prettyPrint: true
+    transport: {
+      target: 'pino-pretty'
+    }
   },
   disableRequestLogging: true,
   requestIdLogLabel: 'reqId',
@@ -16,7 +18,7 @@ const app = fastify({
 
 app.get('/xray', function xRay (request, reply) {
   // send back all the request properties
-  reply.send({
+  return {
     id: request.id, // id assigned to the request in req-<progress>
     ip: request.ip, // the client ip address
     ips: request.ips, // proxy ip addressed
@@ -26,7 +28,7 @@ app.get('/xray', function xRay (request, reply) {
     url: request.url, // the request URL
     routerPath: request.routerPath, // the generic handler URL
     is404: request.is404 // the request has been routed or not
-  })
+  }
 })
 
 app.get('/log', function log (request, reply) {
