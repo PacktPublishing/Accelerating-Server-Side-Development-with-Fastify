@@ -19,7 +19,7 @@ class Car {
   }
 }
 app.get('/car', function (request, reply) {
-  reply.send(new Car('Ferrari'))
+  return new Car('Ferrari')
 })
 
 /* A POST ROUTE */
