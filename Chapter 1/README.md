@@ -5,7 +5,7 @@ In this chapter we will learn about the core concepts of Fastify, getting a comp
 components of the framework.
 You will understand how they work together and how to declare them.
 
-The example we will use is a simple test routes to become confidend with the Fastify's syntax and execution, so HAVE FUN!
+The example we will use is a simple test routes to become confident with the Fastify's syntax and execution, so HAVE FUN!
 
 ## How to use this folder?
 
