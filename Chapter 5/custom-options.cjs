@@ -25,7 +25,11 @@ app.get('/search', {
     query: {
       item: {
         type: 'array',
-        maxItems: 10
+        maxItems: 10,
+        items: {
+          type: 'string',
+          transform: ['toLowerCase']
+        }
       }
     }
   }
