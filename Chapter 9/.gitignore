@@ -62,7 +62,5 @@ typings/
 
 .coveralls.yml
 
-package-lock.json
-
 demo/*
 .vscode/
