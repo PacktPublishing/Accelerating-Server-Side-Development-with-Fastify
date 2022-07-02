@@ -1,7 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const fastifyEnv = require('fastify-env')
+const fastifyEnv = require('@fastify/env')
 
 module.exports = fp(async function configLoader (fastify, opts) {
   await fastify.register(fastifyEnv, {
