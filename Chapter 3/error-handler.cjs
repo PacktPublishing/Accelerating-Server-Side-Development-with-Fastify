@@ -40,10 +40,32 @@ app.get('/manualError', (request, reply) => {
   }
 })
 
+app.register(async function plugin (pluginInstance) {
+  pluginInstance.setErrorHandler(function first (error, request, reply) {
+    request.log.error(error, 'an error happened')
+    reply.status(503).send({ ok: false }) // [4]
+  })
+
+  pluginInstance.register(async function childPlugin (deep, opts) {
+    deep.setErrorHandler(async function second (error, request, reply) {
+      const canIManageThisError = error.code === 'yes, you can' // [2]
+      if (canIManageThisError) {
+        reply.code(503)
+        return { deal: true }
+      }
+      throw error // [3]
+    })
+
+    // This route run the deep's error handler
+    deep.get('/deepError',
+      () => { throw new Error('ops') }) // [1]
+  })
+})
+
 // This route will crash the server due a TypeError Exception!
 app.get('/fatalError', (request, reply) => {
   setTimeout(() => {
-    const foo = request.param.id.split('-')
+    const foo = request.param.id.split('-') // wrong line throws!
     reply.send(`I split the id ${foo}!`)
   })
 })
