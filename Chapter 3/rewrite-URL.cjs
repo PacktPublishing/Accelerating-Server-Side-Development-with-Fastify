@@ -1,13 +1,16 @@
 'use strict'
 const fastify = require('fastify')
 const app = fastify({
-  logger: true,
+  logger: {
+    level: 'debug'
+  },
   rewriteUrl: function rewriteUrl (rawRequest) {
-    console.log('Rewrite url ' + rawRequest.url + rawRequest.url.startsWith('/api'))
-    if (rawRequest.url.startsWith('/api')) {
-      return rawRequest.url
+    const { url } = rawRequest
+    console.log(`Rewrite url ${url}: ${url.startsWith('/api')}`)
+    if (url.startsWith('/api')) {
+      return url
     }
-    return `/public/${rawRequest.url}`
+    return `/public${url}`
   }
 })
 
