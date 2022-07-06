@@ -9,10 +9,29 @@ app.addHook('onRequest', function hook (request, reply, done) {
   done()
 })
 
-const niceHtmlPage = '<html>...'
+const niceHtmlPage = `<html>
+<head>
+  <title>Page not found</title>
+  <style type=text/css>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Error 404</h1>
+</body>
+</html>`
+
 app.register(async function plugin (instance, opts) {
   instance.setNotFoundHandler(function html404 (request, reply) {
-    reply.type('application/html').send(niceHtmlPage)
+    reply.type('text/html').send(niceHtmlPage)
   })
 }, { prefix: '/site' }) // [1]
 

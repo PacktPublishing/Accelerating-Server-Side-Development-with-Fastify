@@ -13,7 +13,7 @@
     "url": "git+https://github.com/PacktPublishing/Accelerate-Web-Development-with-Fastify.git"
   },
   "engines": {
-    "node": "^14.0.0"
+    "node": "^18.0.0"
   },
   "keywords": [],
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",

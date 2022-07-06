@@ -9,7 +9,7 @@ app.get('/foo', function (request, reply) {
   reply.send('plain foo')
 })
 app.get('/foo/', function (request, reply) {
-  reply.send('foo with trailin slash')
+  reply.send('foo with trailing slash')
 })
 
 app.listen({

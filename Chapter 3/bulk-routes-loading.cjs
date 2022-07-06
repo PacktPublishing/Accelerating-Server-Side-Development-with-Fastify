@@ -16,9 +16,7 @@ const routes = [
     handler: function dog (request, reply) { reply.send('dog') }
   }
 ]
-routes.forEach((routeOptions) => {
-  app.route(routeOptions)
-})
+routes.forEach(routeOptions => app.route(routeOptions))
 
 app.listen({
   port: 8080,
