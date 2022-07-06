@@ -10,7 +10,7 @@ app.register(async (instance, opts) => {
   instance.addSchema({
     $id: 'http://myapp.com/user.json',
     type: 'string',
-    maxLength: 50
+    maxLength: 10
   })
 
   instance.get('/single-schema', () => {
