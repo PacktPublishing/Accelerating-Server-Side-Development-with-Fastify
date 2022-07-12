@@ -22,7 +22,7 @@ app.register(async function plugin (instance, opts) {
   })
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 async function echo (request, reply) {
   return {

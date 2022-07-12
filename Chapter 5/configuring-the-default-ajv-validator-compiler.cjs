@@ -32,7 +32,7 @@ app.get('/search', {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 async function echo (request, reply) {
   return {

@@ -3,6 +3,7 @@
 const fastify = require('fastify')
 
 const app = fastify({
+  logger: true,
   ajv: {
     customOptions: {
       coerceTypes: 'array',
@@ -30,7 +31,7 @@ app.setErrorHandler(function (error, request, reply) {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 async function echo (request, reply) {
   return {

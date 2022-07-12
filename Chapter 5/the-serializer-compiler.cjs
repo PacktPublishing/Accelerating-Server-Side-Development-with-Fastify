@@ -22,4 +22,4 @@ app.post('/filter', {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })

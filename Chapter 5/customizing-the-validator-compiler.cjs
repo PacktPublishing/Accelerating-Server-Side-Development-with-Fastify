@@ -25,4 +25,4 @@ app.get('/attach-validation', {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
