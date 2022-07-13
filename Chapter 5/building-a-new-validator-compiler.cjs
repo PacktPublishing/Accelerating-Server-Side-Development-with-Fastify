@@ -33,7 +33,7 @@ app.get('/success', {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 async function echo (request, reply) {
   return {

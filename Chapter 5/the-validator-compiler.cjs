@@ -68,4 +68,4 @@ app.post('/echo/:myInteger', {
   reply.send(request.body)
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })

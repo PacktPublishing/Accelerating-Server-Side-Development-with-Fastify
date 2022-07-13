@@ -35,4 +35,4 @@ app.register(async (instance, opts) => {
   })
 }, { prefix: '/child' })
 
-app.listen(8080)
+app.listen({ port: 8080 })

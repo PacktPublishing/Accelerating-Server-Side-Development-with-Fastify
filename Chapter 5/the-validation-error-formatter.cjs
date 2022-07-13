@@ -15,14 +15,17 @@ app.get('/custom-route-error-formatter', {
   }
 })
 app.register(function plugin (instance, opts, next) {
-  instance.get('/custom-error-formatter', echo)
+  instance.get('/custom-error-formatter', {
+    handler: echo,
+    schema: { query: { myId: { type: 'integer' } } }
+  })
   instance.setSchemaErrorFormatter(function (errors, httpPart) { // [3]
     return new Error('plugin error formatter')
   })
   next()
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 async function echo (request, reply) {
   return {

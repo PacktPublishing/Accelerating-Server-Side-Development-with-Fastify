@@ -37,4 +37,4 @@ app.get('/serializer-compiler', {
   reply.send({ hello: 'world' })
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })

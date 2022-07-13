@@ -32,7 +32,7 @@ app.post('/config-in-action', {
   }
 })
 
-app.listen(8080)
+app.listen({ port: 8080 })
 
 // curl --location --request POST 'http://localhost:8080/config-in-action' \
 // --header 'Content-Type: application/json' \
