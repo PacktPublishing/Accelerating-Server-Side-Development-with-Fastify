@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:5
+    volumes:
+      - data:/data/db
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3042:3000"
+    environment:
+      JWT_SECRET: changethis
+      MONGO_URL: mongodb://mongo:27017/todo
+
+volumes:
+  data:
