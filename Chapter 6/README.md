@@ -21,12 +21,12 @@ Before running the code examples, you need to install the dependencies running `
 ## Trouble?
 
 If you encounter any problems while reading the chapter or while running the code examples,
-you can ask for help on the [official Discord chat](TODO) TODO LINK 
+you can ask for help on the [official Discord chat](TODO) TODO LINK
 
 ## Readme example
 
 ✏️ As discussed in the `Improving the application structure` section, the following text is an example
-of a good application's README.md file: use it as a template to create your own and improve it based on your needs!
+of a good application's README.md file, use it as a template to create your own and improve it based on your needs!
 
 --------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ Adding useful links to the project documentation is a good idea.
 
 You need these external resources:
 
-- Node.js v16.x within npm v7.x
+- Node.js v18.x within npm v7.x
 - Docker: https://docs.docker.com/get-docker/
 
 ## How to install
@@ -61,7 +61,7 @@ npm start
 
 ## How to develop
 
-To run the application you need to setup your `.env` linking the company's 
+To run the application you need to setup your `.env` linking the company's
 development database and run:
 
 ```
