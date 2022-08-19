@@ -30,7 +30,7 @@ t.test('almost equals object structure', function testFunction (t) {
   t.match(almostLike, { hello: 'world' }, 'the object is similar')
 })
 
-t.test('almost equals object structure', function testFunction (t) {
+t.test('almost equals object structure with regex', function testFunction (t) {
   t.plan(1)
   const almostLike = {
     hello: 'world',
