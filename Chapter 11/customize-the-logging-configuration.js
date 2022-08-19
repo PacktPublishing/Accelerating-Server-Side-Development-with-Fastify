@@ -4,7 +4,9 @@ const { fastify } = require('fastify')
 const app = fastify({
   logger: {
     level: 'error',
-    // prettyPrint: true,
+    // transport: {
+    //   target: 'pino-pretty'
+    // },
     serializers: {
       hello: function serializeHello (data) {
         return data.join(',')
@@ -17,7 +19,7 @@ app.get('/root', helloHandler)
 async function helloHandler (request, reply) {
   const hello = ['hello', 'world']
   request.log.debug({ hello })
-  return new Error('')
+  return 'done'
 }
 
 app.register(async function plugin (instance, opts) {
