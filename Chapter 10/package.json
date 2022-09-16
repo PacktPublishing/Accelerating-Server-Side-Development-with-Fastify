@@ -1,7 +1,7 @@
 {
   "name": "chapter-10",
   "version": "1.0.0",
-  "description": "Application testing",
+  "description": "Deployment and Process monitoring for a healthy application",
   "main": "app.js",
   "directories": {
     "test": "test"
