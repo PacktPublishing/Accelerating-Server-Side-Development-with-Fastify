@@ -21,7 +21,7 @@ ENV HOME=/home/app
 ENV APP_HOME=$HOME/node/
 ENV NODE_ENV=production
 
-# change workgin dir and copy deps from builder image
+# change working dir and copy deps from builder image
 WORKDIR $APP_HOME
 COPY --chown=node:node . $APP_HOME
 COPY --chown=node:node --from=builder /build $APP_HOME

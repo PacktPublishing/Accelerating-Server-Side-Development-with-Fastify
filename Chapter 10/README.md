@@ -1,29 +1,26 @@
 # Chapter 10 - Deployment and Process monitoring for a healthy application
 
-This chapter will implements the tests for our project by running the application and mocking when necessary.
+This chapter will unpack the basics of a monolith deployment and will monitor the key Node.js metrics to identify if the application is healthy.
 
 ## How to use this folder?
 
 In this folder you will find the source code of the chapter.
-The filenames are the same as the chapter's sections.
 
 Install the application first by running:
 
 ```
-npm ci
+npm install
 ```
 
-You can run the chapter's code by starting the application:
+## How to start
 
-```bash
-npm test
+You need a `.env` file in the root directory before starting the project.
+Check the `.env.sample` file to know what to put in it.
+
 ```
-
-⚠️ You need a running `docker` application to run the tests.
-
-Before running the code examples, you need to install the dependencies running `npm install`.
+npm start
+```
 
 ## Trouble?
 
-If you encounter any problems while reading the chapter or while running the code examples,
-you can ask for help on the [official Discord chat](TODO) TODO LINK 
+If you encounter any problems while reading the chapter or while running the code examples, you can ask for help on the [official Discord chat](TODO) TODO LINK

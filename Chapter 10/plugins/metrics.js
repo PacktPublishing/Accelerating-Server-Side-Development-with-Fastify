@@ -34,5 +34,5 @@ module.exports = fp(async function (app) {
     host: '0.0.0.0'
   })
 }, {
-  name: 'prom',
+  name: 'prom'
 })
