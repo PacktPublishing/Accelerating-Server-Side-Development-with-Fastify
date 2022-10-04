@@ -37,16 +37,23 @@ async function run () {
       }
     },
     Mutation: {
-      addFamily: async function addFamilyFunc (parent, args, context, info) {
-        // TODO
-      },
       changeNickName: async function changeNickNameFunc (parent, args, context, info) {
         const sql = SQL`UPDATE person SET nickName = ${args.nickName} WHERE id = ${args.personId}`
         const { changes } = await context.app.sqlite.run(sql)
         if (changes === 0) {
-          throw new Error(`Person id ${args.personId} not found`)
+          throw new mercurius.ErrorWithProps(`Person id ${args.personId} not found`)
         }
         const person = await context.personDL.load(args.personId)
+        context.reply.log.debug({ person }, 'Read updated person')
+        return person
+      },
+      changeNickNameWithInput: async function changeNickNameFunc (parent, { input }, context, info) {
+        const sql = SQL`UPDATE person SET nickName = ${input.nick} WHERE id = ${input.personId}`
+        const { changes } = await context.app.sqlite.run(sql)
+        if (changes === 0) {
+          throw new mercurius.ErrorWithProps(`Person id ${input.personId} not found`)
+        }
+        const person = await context.personDL.load(input.personId)
         context.reply.log.debug({ person }, 'Read updated person')
         return person
       }

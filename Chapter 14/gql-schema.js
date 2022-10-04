@@ -20,20 +20,14 @@ type Query {
   family(id: ID!): Family
 }
 
-input AddFamilyInput {
-  name: String!
-  members: [AddPersonInput]!
-}
-
-# ! deve essere aggiunto al libro
-input AddPersonInput {
-  name: String!
-  nick: String
+input NewNickName {
+  personId: ID!
+  nick: String!
 }
 
 type Mutation {
   changeNickName(personId: ID!, nickName: String!): Person
-  addFamily(newFamily: AddFamilyInput): ID!
+  changeNickNameWithInput(input: NewNickName): ID!
 }
 
 type Subscription {
