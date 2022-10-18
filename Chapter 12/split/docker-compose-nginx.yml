@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+
+  app-v1:
+    build: ./microservices/v1
+    environment:
+      - "V2_URL=http://app-v2:3002"
+
+  app-v2:
+    build: ./microservices/v2
+
+  gateway:
+    build: ./nginx
+    ports:
+      - "8080:8080"

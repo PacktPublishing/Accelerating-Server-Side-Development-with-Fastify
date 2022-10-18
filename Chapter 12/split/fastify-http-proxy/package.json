@@ -1,0 +1,15 @@
+{
+  "name": "chapter-12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/http-proxy": "^8.2.3",
+    "fastify": "^4.9.1"
+  }
+}

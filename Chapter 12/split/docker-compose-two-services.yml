@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+
+  app-v1:
+    build: ./microservices/v1
+    environment:
+      - "V2_URL=http://app-v2:3002"
+    ports:
+      - "3001:3001"
+
+  app-v2:
+    build: ./microservices/v2
+    ports:
+      - "3002:3002"

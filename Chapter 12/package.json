@@ -1,0 +1,17 @@
+{
+  "name": "chapter-12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/autoload": "^5.4.1",
+    "fastify": "^4.8.1",
+    "fastify-plugin": "^4.2.1",
+    "undici": "^5.11.0"
+  }
+}
