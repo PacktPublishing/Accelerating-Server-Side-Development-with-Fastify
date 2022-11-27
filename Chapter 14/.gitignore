@@ -63,11 +63,6 @@ typings/
 .coveralls.yml
 
 package-lock.json
-!Chapter 9/package-lock.json
 
 demo/*
-
-.DS_Store
-.eslintrc
-.vscode
-
+.vscode/
