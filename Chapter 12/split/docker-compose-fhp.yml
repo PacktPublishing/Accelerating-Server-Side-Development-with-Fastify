@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+
+  app-v1:
+    build: ./microservices/v1
+    environment:
+      - "V2_URL=http://app-v2:3002"
+
+  app-v2:
+    build: ./microservices/v2
+
+  app-gateway:
+    build: ./fastify-http-proxy
+    ports:
+      - "3000:3000"
+    environment:
+      - "V1_URL=http://app-v1:3001"
+      - "V2_URL=http://app-v2:3002"
