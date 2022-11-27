@@ -1,56 +1,23 @@
-# Project name
+# Chapter 13 - Performance Assessment and Improvement
 
-A short introduction to the project. What it does, how it works, etc.
-Adding useful links to the project documentation is a good idea.
+We all know that Fastify is fast. But is your code fast enough for Fastify? Learn how to measure your code's performance to avoid introducing speed regressions. Improve the throughput of your application, find bottlenecks in your code, avoid production issues, and serve more requests with fewer resources. You will learn how to add an instrumentation library to a Fastify application to analyze in detail how the server reacts to an high volume traffic. We will get an overview to understand and act accordingly on the measurements to keep up our server performance and in an healthy status.
 
-## Requirements
+## How to use this folder?
 
-You need these external resources:
+In this folder you will find the source code of the chapter.
+The filenames are the same as the chapter's sections.
 
-- Node.js v16.x within npm v7.x
-- Docker: https://docs.docker.com/get-docker/
+You can run the chapter's code by starting the application:
 
-## How to install
-
-This project uses `npm`. Install it running:
-
-```
-npm ci
-```
-
-## How to start
-
-You need a `.env` file in the root directory before starting the project.
-Check the `.env.sample` file to know what to put in it.
-
-```
-npm start
-```
-
-## How to develop
-
-To run the application you need to setup your `.env` linking the company's 
-development database and run:
-
-```
+```bash
+npm run zipkin:start
+npm run mongo:start
 npm run dev
 ```
 
-## How to test
+Before running the code examples, you need to install the dependencies running `npm install`.
 
-The tests are written using the [`tap`](https://www.npmjs.com/package/tap) framework.
-To run them you need to run:
+## Trouble?
 
-```
-npm test
-```
-
-## How to deploy
-
-Example:
-
-> Our CI/CD pipeline is based on XXX and it will deploy the application whenever a new merge is detected in the `main` branch.
-
-## Need help?
-
-Contact your colleagues at hi@help.com
+If you encounter any problems while reading the chapter or while running the code examples,
+you can ask for help on the [official Discord chat](TODO) TODO LINK 

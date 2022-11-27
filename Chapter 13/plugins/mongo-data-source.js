@@ -5,6 +5,7 @@ const fastifyMongo = require('@fastify/mongodb')
 
 module.exports = fp(async function datasourcePlugin (fastify, opts) {
   fastify.register(fastifyMongo, {
+    serverSelectionTimeoutMS: 2000,
     forceClose: true,
     maxPoolSize: 20,
     minPoolSize: 10,
