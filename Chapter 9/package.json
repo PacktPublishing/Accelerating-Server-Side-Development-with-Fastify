@@ -15,7 +15,7 @@
     "test:coverage": "tap --coverage-report=html --before=test/run-before.js test/**/**.test.js --after=test/run-after.js",
     "start": "fastify start -l info --options app.js",
     "dev": "npm run start -- --watch --pretty-logs --debug",
-    "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:5",
+    "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:6",
     "mongo:stop": "docker container stop fastify-mongo"
   },
   "keywords": [],
