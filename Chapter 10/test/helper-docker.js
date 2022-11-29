@@ -3,7 +3,7 @@
 const Containers = {
   mongo: {
     name: 'fastify-mongo',
-    Image: 'mongo:5',
+    Image: 'mongo:6',
     Tty: false,
     HostConfig: {
       PortBindings: {
