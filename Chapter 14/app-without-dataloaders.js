@@ -21,7 +21,7 @@ async function run () {
   const resolvers = {
     Query: {
       family: async function familyFunc (parent, args, context, info) {
-        const sql = SQL`SELECT * FROM family WHERE id = ${args.id}`
+        const sql = SQL`SELECT * FROM Family WHERE id = ${args.id}`
         const familyData = await context.app.sqlite.get(sql)
         context.reply.log.debug({ familyData }, 'Read familyData')
         return familyData
@@ -29,7 +29,7 @@ async function run () {
     },
     Mutation: {
       changeNickName: async function changeNickNameFunc (parent, args, context, info) {
-        const sql = SQL`UPDATE person SET nickName = ${args.nickName} WHERE id = ${args.personId}`
+        const sql = SQL`UPDATE Person SET nickName = ${args.nickName} WHERE id = ${args.personId}`
         const { changes } = await context.app.sqlite.run(sql)
         if (changes === 0) {
           throw new Error(`Person id ${args.personId} not found`)
@@ -39,7 +39,7 @@ async function run () {
         return person
       },
       changeNickNameWithInput: async function changeNickNameFunc (parent, { input }, context, info) {
-        const sql = SQL`UPDATE person SET nickName = ${input.nick} WHERE id = ${input.personId}`
+        const sql = SQL`UPDATE Person SET nickName = ${input.nick} WHERE id = ${input.personId}`
         const { changes } = await context.app.sqlite.run(sql)
         if (changes === 0) {
           throw new Error(`Person id ${input.personId} not found`)
@@ -51,7 +51,7 @@ async function run () {
     },
     Family: {
       members: async function membersFunc (parent, args, context, info) {
-        const sql = SQL`SELECT * FROM person WHERE familyId = ${parent.id}`
+        const sql = SQL`SELECT * FROM Person WHERE familyId = ${parent.id}`
         const membersData = await context.app.sqlite.all(sql)
         return membersData
       }
@@ -59,17 +59,17 @@ async function run () {
     Person: {
       nickName: function nickNameFunc (parent) { return parent.nick },
       fullName: async function fullNameFunc (parent, args, context) {
-        const sql = SQL`SELECT * FROM family WHERE id = ${parent.familyId}`
+        const sql = SQL`SELECT * FROM Family WHERE id = ${parent.familyId}`
         const familyData = await context.app.sqlite.get(sql)
         return `${parent.name} ${familyData.name}`
       },
       family: async function familyFunc (parent, args, context) {
-        const sql = SQL`SELECT * FROM family WHERE id = ${parent.familyId}`
+        const sql = SQL`SELECT * FROM Family WHERE id = ${parent.familyId}`
         const familyData = await context.app.sqlite.get(sql)
         return familyData
       },
       friends: async function friendsFunc (parent, args, context) {
-        const sql = SQL`SELECT * FROM person WHERE id IN (SELECT friendId FROM friend WHERE personId = ${parent.id})`
+        const sql = SQL`SELECT * FROM Person WHERE id IN (SELECT friendId FROM Friend WHERE personId = ${parent.id})`
         const friendsData = await context.app.sqlite.all(sql)
         return friendsData
       }
