@@ -2,21 +2,21 @@
 
 module.exports = {
   level: process.env.LOG_LEVEL,
-  transport: {
-    targets: [
-      {
-        target: 'pino/file',
-        options: {
-          destination: require('path').join(__dirname, '../logs/error.log')
-        },
-        level: 'trace'
-      },
-      {
-        target: 'pino/file',
-        options: { destination: 1 }
-      }
-    ]
-  },
+  // transport: {
+  //   targets: [
+  //     {
+  //       target: 'pino/file',
+  //       options: {
+  //         destination: require('path').join(__dirname, '../logs/error.log')
+  //       },
+  //       level: 'trace'
+  //     },
+  //     {
+  //       target: 'pino/file',
+  //       options: { destination: 1 }
+  //     }
+  //   ]
+  // },
   timestamp: () => {
     const dateString = new Date(Date.now()).toISOString()
     return `,"@timestamp":"${dateString}"`
