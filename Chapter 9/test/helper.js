@@ -21,8 +21,11 @@ function config (env) {
 }
 
 // automatically build and tear down our instance
-async function buildApp (t, env) {
-  const app = await fcli.build(startArgs, config({ ...defaultEnv, ...env }))
+async function buildApp (t, env, serverOptions) {
+  const app = await fcli.build(startArgs,
+    config({ ...defaultEnv, ...env }),
+    serverOptions
+  )
   t.teardown(() => { app.close() })
   return app
 }
