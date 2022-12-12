@@ -48,7 +48,7 @@ async function run () {
         }
         const person = await context.personDL.load(input.personId)
         context.reply.log.debug({ person }, 'Read updated person')
-        return person
+        return person.id
       }
     },
     Family: {

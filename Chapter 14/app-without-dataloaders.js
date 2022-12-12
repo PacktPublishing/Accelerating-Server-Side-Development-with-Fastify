@@ -48,7 +48,7 @@ async function run () {
         sql = SQL`SELECT * FROM person WHERE id = ${input.personId}`
         const person = await context.app.sqlite.get(sql)
         context.reply.log.debug({ person }, 'Read updated person')
-        return person
+        return person.id
       }
     },
     Family: {
