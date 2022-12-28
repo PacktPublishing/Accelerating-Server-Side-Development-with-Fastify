@@ -1,27 +1,35 @@
 'use strict'
 
 const t = require('tap')
+const split = require('split2')
+
 const { buildApp } = require('./helper')
 
-t.test('logger must redact sensible data', { todo: 'fails https://github.com/backend-cafe/fastify-todo-list-api/pull/7' }, async (t) => {
-  const logs = []
-  const write = process.stdout.write.bind(process.stdout)
-  process.stdout.write = function (chunk) {
-    logs.push(chunk)
-  }
+t.test('logger must redact sensible data', async (t) => {
+  t.plan(2)
+  const stream = split(JSON.parse)
 
-  const app = await buildApp(t, { LOG_LEVEL: 'info' })
+  const app = await buildApp(t,
+    { LOG_LEVEL: 'info' },
+    {
+      logger: {
+        stream
+      }
+    }
+  )
+  t.teardown(() => { app.close() })
+
   await app.inject({
     method: 'POST',
     url: '/login',
     payload: { username: 'test', password: 'icanpass' }
   })
-  process.stdout.write = write // restore the original function
 
-  t.equal(logs.length, 2)
-  const requestLog = JSON.parse(logs[0])
-  t.notOk(requestLog.req.body, 'the request does not log the body')
-
-  const responseLog = JSON.parse(logs[1])
-  t.equal(responseLog.req.body.password, '***', 'field redacted')
+  for await (const line of stream) {
+    if (line.msg === 'request completed 🎉') {
+      t.ok(line.req.body, 'the request does log the body')
+      t.equal(line.req.body.password, '***', 'field redacted')
+      break
+    }
+  }
 })

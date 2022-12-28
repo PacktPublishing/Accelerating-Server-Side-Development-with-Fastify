@@ -27,7 +27,7 @@ input NewNickName {
 
 type Mutation {
   changeNickName(personId: ID!, nickName: String!): Person
-  changeNickNameWithInput(input: NewNickName): ID!
+  changeNickNameWithInput(input: NewNickName): Person!
 }
 
 type Subscription {
