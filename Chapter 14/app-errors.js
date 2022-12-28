@@ -10,9 +10,19 @@ const PersonDataLoader = require('./data-loaders/person')
 const PersonByFamilyDataLoader = require('./data-loaders/person-by-family')
 const FriendDataLoader = require('./data-loaders/friend')
 
-run()
+module.exports = build
 
-async function run () {
+if (require.main === module) {
+  build()
+    .then((app) => {
+      return app.listen({ port: 3000 })
+    }).catch((err) => {
+      console.error(err)
+      process.exit(1)
+    })
+}
+
+async function build () {
   const app = Fastify({ logger: { level: 'trace' } })
   await app.register(require('fastify-sqlite'), {
     verbose: true,
@@ -38,7 +48,7 @@ async function run () {
     },
     Mutation: {
       changeNickName: async function changeNickNameFunc (parent, args, context, info) {
-        const sql = SQL`UPDATE Person SET nickName = ${args.nickName} WHERE id = ${args.personId}`
+        const sql = SQL`UPDATE Person SET nick = ${args.nickName} WHERE id = ${args.personId}`
         const { changes } = await context.app.sqlite.run(sql)
         if (changes === 0) {
           throw new mercurius.ErrorWithProps(`Person id ${args.personId} not found`)
@@ -48,7 +58,7 @@ async function run () {
         return person
       },
       changeNickNameWithInput: async function changeNickNameFunc (parent, { input }, context, info) {
-        const sql = SQL`UPDATE Person SET nickName = ${input.nick} WHERE id = ${input.personId}`
+        const sql = SQL`UPDATE Person SET nick = ${input.nick} WHERE id = ${input.personId}`
         const { changes } = await context.app.sqlite.run(sql)
         if (changes === 0) {
           throw new mercurius.ErrorWithProps(`Person id ${input.personId} not found`)
@@ -110,5 +120,5 @@ async function run () {
     return error
   }
 
-  await app.listen({ port: 3000 })
+  return app
 }
