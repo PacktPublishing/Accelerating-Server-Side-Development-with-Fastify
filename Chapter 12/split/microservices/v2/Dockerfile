@@ -29,6 +29,5 @@ COPY --chown=node:node --from=builder /build $APP_HOME
 # run app with low permissions level user
 USER node
 
-EXPOSE 3000
 ENTRYPOINT ["dumb-init"]
 CMD ["node", "server.js"]
