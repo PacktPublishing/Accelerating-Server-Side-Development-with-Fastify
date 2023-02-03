@@ -8,7 +8,7 @@ async function getAllPosts () {
   }]
 }
 
-app.get('/posts', {
+fastify.get('/posts', {
   constraints: {
     version: '1.0.0'
   }
@@ -16,7 +16,7 @@ app.get('/posts', {
   return getAllPosts()
 })
 
-app.get('/posts', {
+fastify.get('/posts', {
   constraints: {
     version: '2.0.0'
   }

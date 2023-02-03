@@ -15,5 +15,3 @@ fastify.register(require('./routes/v2/posts'), { prefix: '/v2' })
 */
 
 fastify.listen({ port: 3000 })
-
-
