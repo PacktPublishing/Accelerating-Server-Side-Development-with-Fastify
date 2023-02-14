@@ -1,7 +1,8 @@
 'use strict'
 const fastify = require('fastify')
 const app = fastify({
-  logger: true
+  logger: true,
+  exposeHeadRoutes: false
 })
 
 app.register(async function pluginA (instance) {
