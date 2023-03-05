@@ -10,7 +10,7 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "pretest": "npm run lint",
-    "test": "tap --before=test/run-before.js test/**/**.test.js --after=test/run-after.js --no-check-coverage",
+    "test": "tap --before=test/run-before.js \"test/**/*.test.js\" --after=test/run-after.js --no-check-coverage",
     "test:nostop": "tap --before=test/before.js test/**/**.test.js --no-check-coverage",
     "test:coverage": "tap --coverage-report=html --before=test/run-before.js test/**/**.test.js --after=test/run-after.js",
     "start": "fastify start -l info --options app.js",

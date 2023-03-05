@@ -14,8 +14,11 @@ module.exports.prefixOverride = ''
 // Save the user object to the database
 
 async function applicationAuth (fastify, opts) {
+  const revokedTokens = new Map()
+
   fastify.register(fastifyJwt, {
-    secret: 'supersecret' // todo better config
+    secret: fastify.secrets.JWT_SECRET,
+    trusted: skipRevokedTokens
   })
 
   fastify.decorate('authRoute', async function authRoute (request, reply) {
@@ -47,25 +50,32 @@ async function applicationAuth (fastify, opts) {
     handler: async function meHandler (request, reply) {
       return request.user
     },
+    onRequest: fastify.authRoute,
     schema: {
       headers: fastify.getSchema('schema:auth:token-header'),
       response: {
         200: fastify.getSchema('schema:user')
       }
+    }
+  })
+
+  fastify.post('/refresh', {
+    handler: refreshHandler,
+    onRequest: fastify.authRoute,
+    schema: {
+      headers: fastify.getSchema('schema:auth:token-header'),
+      response: {
+        200: fastify.getSchema('schema:auth:token')
+      }
+    }
+  })
+
+  fastify.post('/logout', {
+    handler: async function logoutHandler (request, reply) {
+      revokedTokens.set(request.user.jti, true)
+      reply.code(204)
     },
     onRequest: fastify.authRoute
-  })
-
-  fastify.post('/refresh', async function authHandler (request, reply) {
-    // todo
-  })
-
-  fastify.post('/logout', async function authHandler (request, reply) {
-    // todo
-  })
-
-  fastify.post('/verify', async function authHandler (request, reply) {
-    // todo
   })
 
   async function registerHandler (request, reply) {
@@ -112,8 +122,20 @@ async function applicationAuth (fastify, opts) {
       throw err
     }
 
-    const token = await fastify.jwt.sign({ username: request.body.username }, { expiresIn: '1h' })
+    return refreshHandler({ user: request.body }, reply)
+  }
+
+  async function refreshHandler (request, reply) {
+    const token = await fastify.jwt.sign({ username: request.user.username }, {
+      jti: String(Date.now()),
+      expiresIn: fastify.secrets.JWT_EXPIRE_IN
+    })
     return { token }
+  }
+
+  // todo: remove async https://github.com/fastify/fastify-jwt/pull/278
+  async function skipRevokedTokens (request, decodedToken) {
+    return !revokedTokens.has(decodedToken.jti)
   }
 }
 

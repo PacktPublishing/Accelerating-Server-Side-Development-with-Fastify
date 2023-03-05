@@ -76,6 +76,18 @@ t.test('register the user', async (t) => {
   t.equal(response.statusCode, 201)
   t.same(response.json(), { registered: true })
 
+  t.test('cannot register the same user twice', async (t) => {
+    const response = await app.inject({
+      method: 'POST',
+      url: '/register',
+      payload: {
+        username: randomUser,
+        password: 'icanpass'
+      }
+    })
+    t.equal(response.statusCode, 409)
+  })
+
   t.test('wrong password login', async (t) => {
     const login = await app.inject({
       method: 'POST',
@@ -117,6 +129,131 @@ t.test('register the user', async (t) => {
       })
       t.equal(response.statusCode, 200)
       t.match(response.json(), { username: randomUser })
+    })
+  })
+})
+
+t.test('generate e new fresh token', async (t) => {
+  const randomUser = crypto.randomBytes(Math.ceil(32 / 2)).toString('hex')
+
+  const app = await buildApp(t, {
+    JWT_EXPIRE_IN: '1s'
+  })
+
+  const response = await app.inject({
+    method: 'POST',
+    url: '/register',
+    payload: {
+      username: randomUser,
+      password: 'icanpass'
+    }
+  })
+  t.equal(response.statusCode, 201)
+
+  t.test('successful login', async (t) => {
+    const login = await app.inject({
+      method: 'POST',
+      url: '/authenticate',
+      payload: {
+        username: randomUser,
+        password: 'icanpass'
+      }
+    })
+    t.equal(login.statusCode, 200)
+
+    t.test('refresh a token before it expires', async (t) => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/refresh',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 200)
+      t.match(response.json(), {
+        token: /(\w*\.){2}.*/
+      }, 'the token is a valid JWT')
+    })
+
+    t.test('refresh a token after it expires', async (t) => {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      const response = await app.inject({
+        method: 'POST',
+        url: '/refresh',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 401)
+      t.same(response.json(), {
+        statusCode: 401,
+        code: 'FST_JWT_AUTHORIZATION_TOKEN_EXPIRED',
+        error: 'Unauthorized',
+        message: 'Authorization token expired'
+      })
+    })
+  })
+})
+
+t.test('logout flow', async (t) => {
+  const randomUser = crypto.randomBytes(Math.ceil(32 / 2)).toString('hex')
+
+  const app = await buildApp(t)
+
+  const response = await app.inject({
+    method: 'POST',
+    url: '/register',
+    payload: {
+      username: randomUser,
+      password: 'icanpass'
+    }
+  })
+  t.equal(response.statusCode, 201)
+
+  t.test('successful login', async (t) => {
+    const login = await app.inject({
+      method: 'POST',
+      url: '/authenticate',
+      payload: {
+        username: randomUser,
+        password: 'icanpass'
+      }
+    })
+    t.equal(login.statusCode, 200)
+
+    t.test('access protected route', async (t) => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/me',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 200)
+      t.match(response.json(), { username: randomUser })
+    })
+
+    t.test('successfull logout', async (t) => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/logout',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 204)
+    })
+
+    t.test('cannot access protected route after logout', async (t) => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/me',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 401)
     })
   })
 })
