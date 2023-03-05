@@ -3,8 +3,8 @@
 const registered = []
 
 module.exports = {
-  async readUser (app, email) {
-    const user = await app.mongo.db.collection('users').findOne({ email })
+  async readUser (app, username) {
+    const user = await app.mongo.db.collection('users').findOne({ username })
     return user
   },
 

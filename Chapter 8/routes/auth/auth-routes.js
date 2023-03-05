@@ -14,17 +14,27 @@ module.exports.prefixOverride = ''
 // Save the user object to the database
 
 async function applicationAuth (fastify, opts) {
-  let loggedIn = false
+  const loggedIn = false
 
   fastify.register(fastifyJwt, {
     secret: 'supersecret' // todo better config
   })
 
   fastify.post('/register', {
+    handler: registerHandler,
     schema: {
       body: fastify.getSchema('schema:auth:register')
-    },
-    handler: registerHandler
+    }
+  })
+
+  fastify.post('/authenticate', {
+    handler: authenticateHandler,
+    schema: {
+      body: fastify.getSchema('schema:auth:register'),
+      response: {
+        200: fastify.getSchema('schema:auth:token')
+      }
+    }
   })
 
   async function registerHandler (request, reply) {
@@ -35,15 +45,11 @@ async function applicationAuth (fastify, opts) {
       throw err
     }
 
-    // Generate a random salt value
-    const salt = crypto.randomBytes(16).toString('hex')
-
-    // Hash the password using the salt value and SHA-256 algorithm
-    const hash = await pbkdf2(request.body.password, salt, 1000, 64, 'sha256').toString('hex')
+    const { hash, salt } = await generateHash(request.body.password)
 
     try {
       const newUserId = await dataStore.storeUser(fastify, {
-        email: request.body.email,
+        username: request.body.username,
         salt,
         hash
       })
@@ -58,15 +64,26 @@ async function applicationAuth (fastify, opts) {
     }
   }
 
-  fastify.post('/authenticate', async function authHandler (request, reply) {
-    if (!dataStore.data().some(user => user.password === request.body.password)) {
+  async function authenticateHandler (request, reply) {
+    const user = await dataStore.readUser(fastify, request.body.username)
+
+    if (!user) {
+      // if we return 404, an attacker can use this to find out which users are registered
       const err = new Error('Wrong credentials provided')
       err.statusCode = 401
       throw err
     }
-    loggedIn = true
-    return { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' }
-  })
+
+    const { hash } = await generateHash(request.body.password, user.salt)
+    if (hash !== user.hash) {
+      const err = new Error('Wrong credentials provided')
+      err.statusCode = 401
+      throw err
+    }
+
+    const token = await fastify.jwt.sign({ username: request.body.username }, { expiresIn: '1h' })
+    return { token }
+  }
 
   fastify.post('/refresh', async function authHandler (request, reply) {
     // todo
@@ -88,4 +105,15 @@ async function applicationAuth (fastify, opts) {
     }
     return { username: 'John Doe', email: 'doe@email.com' }
   })
+}
+
+async function generateHash (password, salt) {
+  if (!salt) {
+    // Generate a random salt value
+    salt = crypto.randomBytes(16).toString('hex')
+  }
+
+  // Hash the password using the salt value and SHA-256 algorithm
+  const hash = (await pbkdf2(password, salt, 1000, 64, 'sha256')).toString('hex')
+  return { salt, hash }
 }
