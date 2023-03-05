@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "$id": "schema:user",
+  "additionalProperties": false,
+  "properties": {
+    "email": {
+      "type": "string"
+    }
+  }
+}
