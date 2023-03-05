@@ -1,11 +1,10 @@
-// @ts-check
 'use strict'
 
 const crypto = require('node:crypto')
 const t = require('tap')
 const { buildApp } = require('./helper')
 
-t.test('cannot access protected routes', async (t) => {
+t.test('cannot access protected routes without header', async (t) => {
   const app = await buildApp(t)
   const privateRoutes = [
     '/me'
@@ -16,8 +15,27 @@ t.test('cannot access protected routes', async (t) => {
     t.equal(response.statusCode, 401)
     t.same(response.json(), {
       statusCode: 401,
+      code: 'FST_JWT_NO_AUTHORIZATION_IN_HEADER',
       error: 'Unauthorized',
       message: 'No Authorization was found in request.headers'
+    })
+  }
+})
+
+t.test('cannot access protected routes with wrong header', async (t) => {
+  const app = await buildApp(t)
+  const privateRoutes = [
+    '/me'
+  ]
+
+  for (const url of privateRoutes) {
+    const response = await app.inject({ method: 'GET', url, headers: { authorization: 'Bearer foo' } })
+    t.equal(response.statusCode, 401)
+    t.same(response.json(), {
+      statusCode: 401,
+      code: 'FST_JWT_AUTHORIZATION_TOKEN_INVALID',
+      error: 'Unauthorized',
+      message: 'Authorization token is invalid: The token is malformed.'
     })
   }
 })
@@ -89,17 +107,17 @@ t.test('register the user', async (t) => {
       token: /(\w*\.){2}.*/
     }, 'the token is a valid JWT')
 
-    // t.test('access protected route', async (t) => {
-    //   const response = await app.inject({
-    //     method: 'GET',
-    //     url: '/me',
-    //     headers: {
-    //       authorization: `Bearer ${login.json().token}`
-    //     }
-    //   })
-    //   t.equal(response.statusCode, 200)
-    //   t.match(response.json(), { username: randomUser })
-    // })
+    t.test('access protected route', async (t) => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/me',
+        headers: {
+          authorization: `Bearer ${login.json().token}`
+        }
+      })
+      t.equal(response.statusCode, 200)
+      t.match(response.json(), { username: randomUser })
+    })
   })
 })
 

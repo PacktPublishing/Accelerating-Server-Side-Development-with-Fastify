@@ -14,10 +14,16 @@ module.exports.prefixOverride = ''
 // Save the user object to the database
 
 async function applicationAuth (fastify, opts) {
-  const loggedIn = false
-
   fastify.register(fastifyJwt, {
     secret: 'supersecret' // todo better config
+  })
+
+  fastify.decorate('authRoute', async function authRoute (request, reply) {
+    try {
+      await request.jwtVerify()
+    } catch (err) {
+      reply.send(err)
+    }
   })
 
   fastify.post('/register', {
@@ -35,6 +41,31 @@ async function applicationAuth (fastify, opts) {
         200: fastify.getSchema('schema:auth:token')
       }
     }
+  })
+
+  fastify.get('/me', {
+    handler: async function meHandler (request, reply) {
+      return request.user
+    },
+    schema: {
+      headers: fastify.getSchema('schema:auth:token-header'),
+      response: {
+        200: fastify.getSchema('schema:user')
+      }
+    },
+    onRequest: fastify.authRoute
+  })
+
+  fastify.post('/refresh', async function authHandler (request, reply) {
+    // todo
+  })
+
+  fastify.post('/logout', async function authHandler (request, reply) {
+    // todo
+  })
+
+  fastify.post('/verify', async function authHandler (request, reply) {
+    // todo
   })
 
   async function registerHandler (request, reply) {
@@ -84,27 +115,6 @@ async function applicationAuth (fastify, opts) {
     const token = await fastify.jwt.sign({ username: request.body.username }, { expiresIn: '1h' })
     return { token }
   }
-
-  fastify.post('/refresh', async function authHandler (request, reply) {
-    // todo
-  })
-
-  fastify.post('/logout', async function authHandler (request, reply) {
-    // todo
-  })
-
-  fastify.post('/verify', async function authHandler (request, reply) {
-    // todo
-  })
-
-  fastify.get('/me', async function meHandler (request, reply) {
-    if (!loggedIn) {
-      const err = new Error('No Authorization was found in request.headers')
-      err.statusCode = 401
-      throw err
-    }
-    return { username: 'John Doe', email: 'doe@email.com' }
-  })
 }
 
 async function generateHash (password, salt) {

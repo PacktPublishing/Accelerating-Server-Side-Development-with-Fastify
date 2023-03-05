@@ -3,7 +3,7 @@
   "$id": "schema:user",
   "additionalProperties": false,
   "properties": {
-    "email": {
+    "username": {
       "type": "string"
     }
   }
