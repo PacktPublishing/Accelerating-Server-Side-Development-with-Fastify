@@ -7,7 +7,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
 
   fastify.register(schemas)
 
-  fastify.decorate('store', {
+  fastify.decorate('mongoDataSource', {
     async countTodos (filter = {}) {
       const totalCount = await todos.countDocuments(filter)
       return totalCount

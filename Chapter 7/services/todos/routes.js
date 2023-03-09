@@ -13,9 +13,9 @@ module.exports = async function todoRoutes (fastify, _opts) {
     handler: async function listTodo (request, reply) {
       const { skip, limit, title } = request.query
 
-      const todos = await this.store.listTodos({ filter: { title }, skip, limit })
-      const totalCount = await this.store.countTodos()
-      reply.send({ data: todos, totalCount })
+      const todos = await this.mongoDataSource.listTodos({ filter: { title }, skip, limit })
+      const totalCount = await this.mongoDataSource.countTodos()
+      return { data: todos, totalCount }
     }
   })
   fastify.route({
@@ -28,8 +28,9 @@ module.exports = async function todoRoutes (fastify, _opts) {
       }
     },
     handler: async function createTodo (request, reply) {
-      const insertedId = await this.store.createTodo(request.body)
-      reply.code(201).send({ id: insertedId })
+      const insertedId = await this.mongoDataSource.createTodo(request.body)
+      reply.code(201)
+      return { id: insertedId }
     }
   })
   fastify.route({
@@ -42,12 +43,12 @@ module.exports = async function todoRoutes (fastify, _opts) {
       }
     },
     handler: async function readTodo (request, reply) {
-      const todo = await this.store.readTodo(request.params.id)
+      const todo = await this.mongoDataSource.readTodo(request.params.id)
       if (!todo) {
-        reply.code(404).send({ error: 'Todo not found' })
-        return
+        reply.code(404)
+        return { error: 'Todo not found' }
       }
-      reply.send(todo)
+      return todo
     }
   })
   fastify.route({
@@ -58,8 +59,9 @@ module.exports = async function todoRoutes (fastify, _opts) {
       body: fastify.getSchema('schema:todoc:create:body')
     },
     handler: async function updateTodo (request, reply) {
-      await this.store.updateTodo(request.params.id, request.body)
-      reply.send()
+      await this.mongoDataSource.updateTodo(request.params.id, request.body)
+      reply.code(204)
+      return
     }
   })
   fastify.route({
@@ -69,8 +71,9 @@ module.exports = async function todoRoutes (fastify, _opts) {
       params: fastify.getSchema('schema:todo:read:params')
     },
     handler: async function deleteTodo (request, reply) {
-      await this.store.deleteTodo(request.params.id)
-      reply.code(204).send()
+      await this.mongoDataSource.deleteTodo(request.params.id)
+      reply.code(204)
+      return
     }
   })
   fastify.route({
@@ -80,7 +83,7 @@ module.exports = async function todoRoutes (fastify, _opts) {
       params: fastify.getSchema('schema:todo:status:params')
     },
     handler: async function doneTodo (request, reply) {
-      await this.store.updateTodo(request.params.id, { done: true })
+      await this.mongoDataSource.updateTodo(request.params.id, { done: true })
       reply.send()
     }
   })
