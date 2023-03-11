@@ -1,0 +1,16 @@
+{
+  "$id": "schema:todo:list:query",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "limit": {
+      "$ref": "schema:limit#/properties/limit"
+    },
+    "skip": {
+      "$ref": "schema:skip#/properties/skip"
+    }
+  }
+}

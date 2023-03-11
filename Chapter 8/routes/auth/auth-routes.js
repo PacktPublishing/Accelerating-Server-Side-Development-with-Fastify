@@ -1,34 +1,24 @@
 'use strict'
 
-const crypto = require('crypto')
-const util = require('util')
-const fastifyJwt = require('@fastify/jwt')
+const crypto = require('node:crypto')
+const util = require('node:util')
 
-const pbkdf2 = util.promisify(crypto.pbkdf2)
+const fp = require('fastify-plugin')
 
 const dataStore = require('../data-store')
 
-module.exports = applicationAuth
+const pbkdf2 = util.promisify(crypto.pbkdf2)
+
+module.exports = fp(applicationAuth, {
+  name: 'auth-routes',
+  encapsulate: true,
+  dependencies: ['authentication-config']
+})
 module.exports.prefixOverride = ''
 
 // Save the user object to the database
 
 async function applicationAuth (fastify, opts) {
-  const revokedTokens = new Map()
-
-  fastify.register(fastifyJwt, {
-    secret: fastify.secrets.JWT_SECRET,
-    trusted: skipRevokedTokens
-  })
-
-  fastify.decorate('authRoute', async function authRoute (request, reply) {
-    try {
-      await request.jwtVerify()
-    } catch (err) {
-      reply.send(err)
-    }
-  })
-
   fastify.post('/register', {
     handler: registerHandler,
     schema: {
@@ -72,7 +62,7 @@ async function applicationAuth (fastify, opts) {
 
   fastify.post('/logout', {
     handler: async function logoutHandler (request, reply) {
-      revokedTokens.set(request.user.jti, true)
+      request.revokeToken()
       reply.code(204)
     },
     onRequest: fastify.authRoute
@@ -122,20 +112,13 @@ async function applicationAuth (fastify, opts) {
       throw err
     }
 
-    return refreshHandler({ user: request.body }, reply)
+    request.user = user
+    return refreshHandler(request, reply)
   }
 
   async function refreshHandler (request, reply) {
-    const token = await fastify.jwt.sign({ username: request.user.username }, {
-      jti: String(Date.now()),
-      expiresIn: fastify.secrets.JWT_EXPIRE_IN
-    })
+    const token = await request.generateToken()
     return { token }
-  }
-
-  // todo: remove async https://github.com/fastify/fastify-jwt/pull/278
-  async function skipRevokedTokens (request, decodedToken) {
-    return !revokedTokens.has(decodedToken.jti)
   }
 }
 
