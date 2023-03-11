@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "$id": "schema:todo",
+  "additionalProperties": false,
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "done": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
