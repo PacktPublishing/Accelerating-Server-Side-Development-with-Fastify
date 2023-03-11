@@ -1,5 +1,7 @@
 'use strict'
 
+const crypto = require('node:crypto')
+
 // This file contains code that we reuse
 // between our tests.
 const fcli = require('fastify-cli/helper')
@@ -30,6 +32,36 @@ async function buildApp (t, env, serverOptions) {
   return app
 }
 
+async function buildUser (app) {
+  const randomUser = crypto.randomBytes(16).toString('hex')
+  const password = 'icanpass'
+
+  await app.inject({
+    method: 'POST',
+    url: '/register',
+    payload: {
+      username: randomUser,
+      password
+    }
+  })
+
+  const login = await app.inject({
+    method: 'POST',
+    url: '/authenticate',
+    payload: {
+      username: randomUser,
+      password
+    }
+  })
+
+  return {
+    username: randomUser,
+    password,
+    token: login.json().token
+  }
+}
+
 module.exports = {
-  buildApp
+  buildApp,
+  buildUser
 }

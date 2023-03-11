@@ -24,7 +24,10 @@ module.exports = fp(async function authenticationPlugin (fastify, opts) {
   })
 
   fastify.decorateRequest('generateToken', async function () {
-    const token = await fastify.jwt.sign({ username: this.user.username }, {
+    const token = await fastify.jwt.sign({
+      id: String(this.user._id),
+      username: this.user.username
+    }, {
       jti: String(Date.now()),
       expiresIn: fastify.secrets.JWT_EXPIRE_IN
     })
