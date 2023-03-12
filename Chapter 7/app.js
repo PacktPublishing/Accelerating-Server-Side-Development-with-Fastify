@@ -19,7 +19,7 @@ module.exports = async function (fastify, opts) {
   })
 
   fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'services'),
+    dir: path.join(__dirname, 'routes'),
     indexPattern: /.*routes(\.js|\.cjs)$/i,
     ignorePattern: /.*\.js/,
     autoHooksPattern: /.*hooks(\.js|\.cjs)$/i,

@@ -53,7 +53,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       return todo
     },
     async updateTodo (id, newTodo) {
-      await todos.updateOne(
+      return await todos.updateOne(
         { _id: new fastify.mongo.ObjectId(id) },
         {
           $set: {
@@ -64,7 +64,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       )
     },
     async deleteTodo (id) {
-      await todos.deleteOne({ _id: new fastify.mongo.ObjectId(id) })
+      return await todos.deleteOne({ _id: new fastify.mongo.ObjectId(id) })
     }
   })
 }, {

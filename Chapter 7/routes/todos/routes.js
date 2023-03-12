@@ -18,6 +18,7 @@ module.exports = async function todoRoutes (fastify, _opts) {
       return { data: todos, totalCount }
     }
   })
+
   fastify.route({
     method: 'POST',
     url: '/',
@@ -33,6 +34,7 @@ module.exports = async function todoRoutes (fastify, _opts) {
       return { id: insertedId }
     }
   })
+
   fastify.route({
     method: 'GET',
     url: '/:id',
@@ -51,19 +53,25 @@ module.exports = async function todoRoutes (fastify, _opts) {
       return todo
     }
   })
+
   fastify.route({
     method: 'PUT',
     url: '/:id',
     schema: {
       params: fastify.getSchema('schema:todo:read:params'),
-      body: fastify.getSchema('schema:todoc:create:body')
+      body: fastify.getSchema('schema:todo:update:body')
     },
     handler: async function updateTodo (request, reply) {
       await this.mongoDataSource.updateTodo(request.params.id, request.body)
+      if (res.modifiedCount === 0) {
+        reply.code(404)
+        return { error: 'Todo not found' }
+      }
+
       reply.code(204)
-      return
     }
   })
+
   fastify.route({
     method: 'DELETE',
     url: '/:id',
@@ -71,11 +79,15 @@ module.exports = async function todoRoutes (fastify, _opts) {
       params: fastify.getSchema('schema:todo:read:params')
     },
     handler: async function deleteTodo (request, reply) {
-      await this.mongoDataSource.deleteTodo(request.params.id)
+      const res = await this.mongoDataSource.deleteTodo(request.params.id)
+      if (res.deletedCount === 0) {
+        reply.code(404)
+        return { error: 'Todo not found' }
+      }
       reply.code(204)
-      return
     }
   })
+
   fastify.route({
     method: 'POST',
     url: '/:id/:status',
@@ -83,8 +95,13 @@ module.exports = async function todoRoutes (fastify, _opts) {
       params: fastify.getSchema('schema:todo:status:params')
     },
     handler: async function doneTodo (request, reply) {
-      await this.mongoDataSource.updateTodo(request.params.id, { done: true })
-      reply.send()
+      const res = await this.mongoDataSource.updateTodo(request.params.id, { done: true })
+      if (res.modifiedCount === 0) {
+        reply.code(404)
+        return { error: 'Todo not found' }
+      }
+
+      reply.code(204)
     }
   })
 }
