@@ -1,0 +1,10 @@
+{
+  "$id": "schema:todo:list:download",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

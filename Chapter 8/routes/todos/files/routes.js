@@ -2,6 +2,7 @@
 
 const fastifyMultipart = require('@fastify/multipart')
 const { parse: csvParse } = require('csv-parse')
+const { stringify: csvStringify } = require('csv-stringify')
 
 module.exports = fileTodoRoutes
 
@@ -75,6 +76,40 @@ async function fileTodoRoutes (fastify, _opts) {
       const inserted = await datasource.createTodos(request.body.todoListFile)
       reply.code(201)
       return inserted
+    }
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/download',
+    schema: {
+      querystring: fastify.getSchema('schema:todo:list:download')
+    },
+    handler: async function listTodo (request, reply) {
+      const { title } = request.query
+
+      const datasource = request.mongoDataSource()
+
+      // We manage the cursor as the data could be huge
+      const cursor = await datasource.listTodos({
+        filter: { title },
+        skip: 0,
+        limit: undefined,
+        asStream: true
+      })
+
+      reply.header('Content-Disposition', 'attachment; filename="todo-list.csv"')
+      reply.type('text/csv')
+
+      return cursor.pipe(csvStringify({
+        quoted_string: true,
+        header: true,
+        columns: ['title', 'done', 'createdAt', 'updatedAt', 'id'],
+        cast: {
+          boolean: (value) => value ? 'true' : 'false',
+          date: (value) => value.toISOString()
+        }
+      }))
     }
   })
 }

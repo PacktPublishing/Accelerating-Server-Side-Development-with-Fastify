@@ -22,10 +22,11 @@ async function todoAutoHooks (fastify, opts) {
       },
 
       async listTodos ({
-        filter = {},
+        filter,
         projection = {},
         skip = 0,
-        limit = 50
+        limit = 50,
+        asStream = false
       } = {}) {
         if (filter.title) {
           filter.title = new RegExp(filter.title, 'i')
@@ -34,15 +35,19 @@ async function todoAutoHooks (fastify, opts) {
         }
         filter.userId = req.user.id
 
-        const todoDocuments = await todos
+        const cursor = todos
           .find(filter, {
             projection: { ...projection, _id: 0 },
             limit,
             skip,
             sort: { createdAt: -1 }
           })
-          .toArray()
-        return todoDocuments
+
+        if (asStream) {
+          return cursor.stream()
+        }
+
+        return await cursor.toArray()
       },
 
       async createTodo ({ title }) {
