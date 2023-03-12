@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "$id": "schema:skip",
+  "additionalProperties": false,
+  "properties": {
+    "skip": {
+      "type": "integer",
+      "default": "0",
+      "minimum": 0
+    }
+  }
+}

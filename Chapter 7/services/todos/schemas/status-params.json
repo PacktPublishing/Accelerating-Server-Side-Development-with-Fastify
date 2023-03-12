@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "$id": "schema:todo:status:params",
+  "required": ["id"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["done", "undone"]
+    }
+  }
+}
