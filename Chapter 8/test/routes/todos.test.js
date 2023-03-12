@@ -11,6 +11,11 @@ t.beforeEach(async (t) => {
   t.context = { app, user }
 })
 
+t.test('access denied', async (t) => {
+  const denied = await t.context.app.inject({ url: '/todos' })
+  t.equal(denied.statusCode, 401)
+})
+
 t.test('check empty todo list', async (t) => {
   const { token } = t.context.user
 

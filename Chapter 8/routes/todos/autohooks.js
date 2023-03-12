@@ -61,6 +61,25 @@ async function todoAutoHooks (fastify, opts) {
         return insertedId
       },
 
+      async createTodos (todoList) {
+        const now = new Date()
+        const userId = req.user.id
+        const toInsert = todoList.map(rawTodo => {
+          const _id = new fastify.mongo.ObjectId()
+
+          return {
+            _id,
+            userId,
+            ...rawTodo,
+            id: _id,
+            createdAt: now,
+            modifiedAt: now
+          }
+        })
+        await todos.insertMany(toInsert)
+        return toInsert
+      },
+
       async readTodo (id, projection = {}) {
         const todo = await todos.findOne(
           { _id: new fastify.mongo.ObjectId(id), userId: req.user.id },
