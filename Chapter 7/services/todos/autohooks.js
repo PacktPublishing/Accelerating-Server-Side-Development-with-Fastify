@@ -52,12 +52,12 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       )
       return todo
     },
-    async updateTodo (id, newTodo) {
-      await todos.updateOne(
+    async updateTodo (id, updatedTodo) {
+      return todos.updateOne(
         { _id: new fastify.mongo.ObjectId(id) },
         {
           $set: {
-            ...newTodo,
+            ...updatedTodo,
             modifiedAt: new Date()
           }
         }
