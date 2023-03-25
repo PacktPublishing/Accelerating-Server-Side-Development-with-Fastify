@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "$id": "schema:todo:create:response",
+  "required": ["id"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    }
+  }
+}

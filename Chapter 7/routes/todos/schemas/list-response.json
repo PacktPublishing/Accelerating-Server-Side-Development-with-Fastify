@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "$id": "schema:todo:list:response",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "schema:todo"
+      }
+    },
+    "totalCount": {
+      "type": "integer"
+    }
+  }
+}
