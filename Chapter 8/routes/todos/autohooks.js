@@ -2,31 +2,25 @@
 const fp = require('fastify-plugin')
 const schemas = require('./schemas/loader')
 
-module.exports = fp(todoAutoHooks, {
-  dependencies: ['@fastify/mongodb'],
-  name: 'todo-store'
-})
-
-async function todoAutoHooks (fastify, opts) {
+module.exports = fp(async function todoAutoHooks (fastify, opts) {
   const todos = fastify.mongo.db.collection('todos')
 
   fastify.register(schemas)
 
-  fastify.decorateRequest('mongoDataSource', function () {
-    const req = this
-    return {
+  fastify.decorateRequest('todosDataSource', null) // [1]
+  fastify.addHook('onRequest', async (req, reply) => { // [2]
+    req.todosDataSource = { // [3]
       async countTodos (filter = {}) {
-        filter.userId = req.user.id
+        filter.userId = req.user.id // [4]
         const totalCount = await todos.countDocuments(filter)
         return totalCount
       },
-
       async listTodos ({
-        filter,
+        filter = {},
         projection = {},
         skip = 0,
         limit = 50,
-        asStream = false
+        asStream = false // [5]
       } = {}) {
         if (filter.title) {
           filter.title = new RegExp(filter.title, 'i')
@@ -39,17 +33,15 @@ async function todoAutoHooks (fastify, opts) {
           .find(filter, {
             projection: { ...projection, _id: 0 },
             limit,
-            skip,
-            sort: { createdAt: -1 }
+            skip
           })
 
         if (asStream) {
-          return cursor.stream()
+          return cursor.stream() // [6]
         }
 
-        return await cursor.toArray()
+        return cursor.toArray()
       },
-
       async createTodo ({ title }) {
         const _id = new fastify.mongo.ObjectId()
         const now = new Date()
@@ -65,8 +57,7 @@ async function todoAutoHooks (fastify, opts) {
         })
         return insertedId
       },
-
-      async createTodos (todoList) {
+      async createTodos (todoList) { // [7]
         const now = new Date()
         const userId = req.user.id
         const toInsert = todoList.map(rawTodo => {
@@ -82,9 +73,8 @@ async function todoAutoHooks (fastify, opts) {
           }
         })
         await todos.insertMany(toInsert)
-        return toInsert
+        return toInsert.map((todo) => todo._id)
       },
-
       async readTodo (id, projection = {}) {
         const todo = await todos.findOne(
           { _id: new fastify.mongo.ObjectId(id), userId: req.user.id },
@@ -92,23 +82,24 @@ async function todoAutoHooks (fastify, opts) {
         )
         return todo
       },
-
       async updateTodo (id, newTodo) {
-        return await todos.updateOne(
+        return todos.updateOne(
           { _id: new fastify.mongo.ObjectId(id), userId: req.user.id },
           {
             $set: {
               ...newTodo,
-              userId: req.user.id,
               modifiedAt: new Date()
             }
           }
         )
       },
-
       async deleteTodo (id) {
-        return await todos.deleteOne({ _id: new fastify.mongo.ObjectId(id), userId: req.user.id })
+        return todos.deleteOne({ _id: new fastify.mongo.ObjectId(id), userId: req.user.id })
       }
     }
   })
-}
+}, {
+  encapsulate: true,
+  dependencies: ['@fastify/mongodb'],
+  name: 'todo-store'
+})
