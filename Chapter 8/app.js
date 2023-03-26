@@ -27,9 +27,6 @@ module.exports = async function (fastify, opts) {
     cascadeHooks: true,
     options: Object.assign({}, opts)
   })
-  fastify.addHook('onReady', () => {
-    console.log(fastify.printRoutes())
-  })
 }
 
 module.exports.options = require('./configs/server-options')
