@@ -37,11 +37,8 @@ async function fileTodoRoutes (fastify, _opts) {
       files: 1
     }
   })
-
-  // All routes in this file are protected by the authRoute hook
   fastify.addHook('onRequest', fastify.authRoute)
 
-  //
   fastify.route({
     method: 'POST',
     url: '/import',
@@ -72,8 +69,7 @@ async function fileTodoRoutes (fastify, _opts) {
       }
     },
     handler: async function listTodo (request, reply) {
-      const datasource = request.mongoDataSource()
-      const inserted = await datasource.createTodos(request.body.todoListFile)
+      const inserted = await request.todosDataSource.createTodos(request.body.todoListFile)
       reply.code(201)
       return inserted
     }
@@ -81,17 +77,15 @@ async function fileTodoRoutes (fastify, _opts) {
 
   fastify.route({
     method: 'GET',
-    url: '/download',
+    url: '/export',
     schema: {
-      querystring: fastify.getSchema('schema:todo:list:download')
+      querystring: fastify.getSchema('schema:todo:list:export')
     },
     handler: async function listTodo (request, reply) {
       const { title } = request.query
 
-      const datasource = request.mongoDataSource()
-
       // We manage the cursor as the data could be huge
-      const cursor = await datasource.listTodos({
+      const cursor = await request.todosDataSource.listTodos({
         filter: { title },
         skip: 0,
         limit: undefined,
