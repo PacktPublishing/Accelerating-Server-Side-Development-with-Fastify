@@ -17,7 +17,7 @@ app.register(usersRouter, { prefix: 'v1' }) // [2]
 app.register(
   async function usersRouterV2 (fastify, options) { // [3]
     fastify.register(usersRouter) // [4]
-    fastify.delete('/:name', (request, reply) => { // [5]
+    fastify.delete('/users/:name', (request, reply) => { // [5]
       const userIndex = fastify.users.findIndex(
         user => user.name === request.params.name
       )
