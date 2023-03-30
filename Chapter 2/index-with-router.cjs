@@ -29,4 +29,4 @@ app.register(
 )
 
 app.ready()
-  .then(() => { console.log(app.printRoutes()) }) // [5]
+  .then(() => { console.log(app.printRoutes()) }) // [6]
