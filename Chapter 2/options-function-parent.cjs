@@ -1,7 +1,7 @@
 const Fastify = require('fastify')
 function options (parent) {
   return ({
-    prefix: 'v',
+    prefix: 'v1',
     myPlugin: {
       first: parent.mySpecialProp // [2]
     }
