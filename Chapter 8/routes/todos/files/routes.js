@@ -4,9 +4,7 @@ const fastifyMultipart = require('@fastify/multipart')
 const { parse: csvParse } = require('csv-parse')
 const { stringify: csvStringify } = require('csv-stringify')
 
-module.exports = fileTodoRoutes
-
-async function fileTodoRoutes (fastify, _opts) {
+module.exports = async function fileTodoRoutes (fastify, _opts) {
   await fastify.register(fastifyMultipart, {
     attachFieldsToBody: 'keyValues',
     async onFile (part) {
@@ -37,7 +35,7 @@ async function fileTodoRoutes (fastify, _opts) {
       files: 1
     }
   })
-  fastify.addHook('onRequest', fastify.authRoute)
+  fastify.addHook('onRequest', fastify.authenticate)
 
   fastify.route({
     method: 'POST',

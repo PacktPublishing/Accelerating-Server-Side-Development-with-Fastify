@@ -8,10 +8,10 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
   fastify.register(schemas)
 
   fastify.decorateRequest('todosDataSource', null) // [1]
-  fastify.addHook('onRequest', async (req, reply) => { // [2]
-    req.todosDataSource = { // [3]
+  fastify.addHook('onRequest', async (request, reply) => { // [2]
+    request.todosDataSource = { // [3]
       async countTodos (filter = {}) {
-        filter.userId = req.user.id // [4]
+        filter.userId = request.user.id // [4]
         const totalCount = await todos.countDocuments(filter)
         return totalCount
       },
@@ -27,7 +27,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
         } else {
           delete filter.title
         }
-        filter.userId = req.user.id
+        filter.userId = request.user.id
 
         const cursor = todos
           .find(filter, {
@@ -45,7 +45,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       async createTodo ({ title }) {
         const _id = new fastify.mongo.ObjectId()
         const now = new Date()
-        const userId = req.user.id
+        const userId = request.user.id
         const { insertedId } = await todos.insertOne({
           _id,
           userId,
@@ -59,7 +59,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       },
       async createTodos (todoList) { // [7]
         const now = new Date()
-        const userId = req.user.id
+        const userId = request.user.id
         const toInsert = todoList.map(rawTodo => {
           const _id = new fastify.mongo.ObjectId()
 
@@ -77,14 +77,14 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
       },
       async readTodo (id, projection = {}) {
         const todo = await todos.findOne(
-          { _id: new fastify.mongo.ObjectId(id), userId: req.user.id },
+          { _id: new fastify.mongo.ObjectId(id), userId: request.user.id },
           { projection: { ...projection, _id: 0 } }
         )
         return todo
       },
       async updateTodo (id, newTodo) {
         return todos.updateOne(
-          { _id: new fastify.mongo.ObjectId(id), userId: req.user.id },
+          { _id: new fastify.mongo.ObjectId(id), userId: request.user.id },
           {
             $set: {
               ...newTodo,
@@ -94,7 +94,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
         )
       },
       async deleteTodo (id) {
-        return todos.deleteOne({ _id: new fastify.mongo.ObjectId(id), userId: req.user.id })
+        return todos.deleteOne({ _id: new fastify.mongo.ObjectId(id), userId: request.user.id })
       }
     }
   })

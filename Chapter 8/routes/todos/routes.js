@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = async function todoRoutes (fastify, _opts) {
-  fastify.addHook('onRequest', fastify.authRoute) // [1]
+  fastify.addHook('onRequest', fastify.authenticate) // [1]
 
   fastify.route({
     method: 'GET',
