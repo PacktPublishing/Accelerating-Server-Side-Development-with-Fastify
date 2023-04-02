@@ -2,12 +2,12 @@ const Fastify = require('fastify')
 const app = Fastify({ logger: true })
 
 app.register(function noError (fastify, opts, done) {
-  console.log('Registering my first plugin.')
+  app.log.info('Registering my first plugin.')
   // we need to call done explicitly to let fastify go to the next plugin
   done() // [1]
 })
 app.register(function (fastify, opts, done) {
-  console.log('Registering my second plugin.')
+  app.log.info('Registering my second plugin.')
   try {
     throw new Error('Something bad happened!')
     // eslint-disable-next-line no-unreachable
