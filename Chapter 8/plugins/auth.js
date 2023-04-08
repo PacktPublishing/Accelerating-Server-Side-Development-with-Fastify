@@ -8,8 +8,7 @@ module.exports = fp(async function authenticationPlugin (fastify, opts) {
 
   fastify.register(fastifyJwt, { // [3]
     secret: fastify.secrets.JWT_SECRET,
-    // todo: remove async https://github.com/fastify/fastify-jwt/pull/278
-    trusted: async function isTrusted (request, decodedToken) {
+    trusted: function isTrusted (request, decodedToken) {
       return !revokedTokens.has(decodedToken.jti)
     }
   })
