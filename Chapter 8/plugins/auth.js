@@ -1,29 +1,31 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const fastifyJwt = require('@fastify/jwt')
+const fastifyJwt = require('@fastify/jwt') // [1]
 
 module.exports = fp(async function authenticationPlugin (fastify, opts) {
-  const revokedTokens = new Map() // [1]
+  const revokedTokens = new Map() // [2]
 
-  fastify.register(fastifyJwt, { // [2]
+  fastify.register(fastifyJwt, { // [3]
     secret: fastify.secrets.JWT_SECRET,
-    trusted: skipRevokedTokens
+    trusted: function isTrusted (request, decodedToken) {
+      return !revokedTokens.has(decodedToken.jti)
+    }
   })
 
-  fastify.decorate('authRoute', async function authRoute (request, reply) { // [3]
+  fastify.decorate('authenticate', async function authenticate (request, reply) { // [4]
     try {
-      await request.jwtVerify()
+      await request.jwtVerify() // [5]
     } catch (err) {
       reply.send(err)
     }
   })
 
-  fastify.decorateRequest('revokeToken', function () { // [4]
+  fastify.decorateRequest('revokeToken', function () { // [6]
     revokedTokens.set(this.user.jti, true)
   })
 
-  fastify.decorateRequest('generateToken', async function () { // [5]
+  fastify.decorateRequest('generateToken', async function () { // [7]
     const token = await fastify.jwt.sign({
       id: String(this.user._id),
       username: this.user.username
@@ -34,12 +36,7 @@ module.exports = fp(async function authenticationPlugin (fastify, opts) {
 
     return token
   })
-
-  // todo: remove async https://github.com/fastify/fastify-jwt/pull/278
-  async function skipRevokedTokens (request, decodedToken) { // [6]
-    return !revokedTokens.has(decodedToken.jti)
-  }
 }, {
-  name: 'authentication-config',
+  name: 'authentication-plugin',
   dependencies: ['application-config']
 })

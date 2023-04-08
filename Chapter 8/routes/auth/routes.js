@@ -7,22 +7,22 @@ const generateHash = require('./generate-hash')
 module.exports.prefixOverride = '' // [1]
 module.exports = fp(
   async function applicationAuth (fastify, opts) {
-    fastify.post('/register', { // [2]
+    fastify.post('/register', {
       schema: {
         body: fastify.getSchema('schema:auth:register')
       },
       handler: async function registerHandler (request, reply) {
-        const existingUser = await this.usersDataSource.readUser(request.body.username) // [1]
+        const existingUser = await this.usersDataSource.readUser(request.body.username)
         if (existingUser) {
           const err = new Error('User already registered')
           err.statusCode = 409
           throw err
         }
 
-        const { hash, salt } = await generateHash(request.body.password) // [2]
+        const { hash, salt } = await generateHash(request.body.password)
 
         try {
-          const newUserId = await this.usersDataSource.createUser({ // [3]
+          const newUserId = await this.usersDataSource.createUser({
             username: request.body.username,
             salt,
             hash
@@ -39,7 +39,7 @@ module.exports = fp(
       }
     })
 
-    fastify.post('/authenticate', { // [3]
+    fastify.post('/authenticate', {
       schema: {
         body: fastify.getSchema('schema:auth:register'),
         response: {
@@ -68,8 +68,8 @@ module.exports = fp(
       }
     })
 
-    fastify.get('/me', { // [4]
-      onRequest: fastify.authRoute,
+    fastify.get('/me', {
+      onRequest: fastify.authenticate,
       schema: {
         headers: fastify.getSchema('schema:auth:token-header'),
         response: {
@@ -81,8 +81,8 @@ module.exports = fp(
       }
     })
 
-    fastify.post('/refresh', { // [5]
-      onRequest: fastify.authRoute,
+    fastify.post('/refresh', {
+      onRequest: fastify.authenticate,
       schema: {
         headers: fastify.getSchema('schema:auth:token-header'),
         response: {
@@ -92,20 +92,20 @@ module.exports = fp(
       handler: refreshHandler
     })
 
-    fastify.post('/logout', { // [6]
-      onRequest: fastify.authRoute,
+    async function refreshHandler (request, reply) {
+      const token = await request.generateToken()
+      return { token }
+    }
+
+    fastify.post('/logout', {
+      onRequest: fastify.authenticate,
       handler: async function logoutHandler (request, reply) {
         request.revokeToken()
         reply.code(204)
       }
     })
-
-    async function refreshHandler (request, reply) { // [7]
-      const token = await request.generateToken()
-      return { token }
-    }
   }, {
-    encapsulate: true,
     name: 'auth-routes',
-    dependencies: ['authentication-config']
+    dependencies: ['authentication-plugin'],
+    encapsulate: true
   })
