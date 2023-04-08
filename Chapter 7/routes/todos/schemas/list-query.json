@@ -1,6 +1,6 @@
 {
-  "$id": "schema:todo:list:query",
   "type": "object",
+  "$id": "schema:todo:list:query",
   "additionalProperties": false,
   "properties": {
     "title": {
