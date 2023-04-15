@@ -1,11 +1,9 @@
 
-# Chapter 1 - What is Fastify?
+# Chapter 4 - Exploring Hooks
 
-In this chapter we will learn about the core concepts of Fastify, getting a complete overview of the
-components of the framework.
-You will understand how they work together and how to declare them.
-
-The example we will use is a simple test routes to become confident with the Fastify's syntax and execution, so HAVE FUN!
+This chapter explains how Fastify is different from other web frameworks because it uses hooks instead of middleware.  
+Mastering these hooks is essential for building stable and production-ready server applications.  
+The chapter provides an overview of the hooks and the lifecycle of Fastify applications.
 
 ## How to use this folder?
 

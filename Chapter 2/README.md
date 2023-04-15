@@ -1,9 +1,8 @@
 
-# Chapter 1 - What is Fastify?
+# Chapter 2 - Plugin System and Boot Process
 
-In this chapter we will learn about the core concepts of Fastify, getting a complete overview of the
-components of the framework.
-You will understand how they work together and how to declare them.
+You will learn the importance of Fastify plugins for developers, highlighting their role in achieving reusability, code sharing, and proper encapsulation between Fastify instances.  
+The chapter focuses on the declaration and implementation of a simple plugin, gradually adding more layers to explore their interaction and dependency management.
 
 The example we will use is a simple test routes to become confident with the Fastify's syntax and execution, so HAVE FUN!
 

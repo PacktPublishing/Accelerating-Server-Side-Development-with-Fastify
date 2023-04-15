@@ -23,4 +23,5 @@ npm start
 
 ## Trouble?
 
-If you encounter any problems while reading the chapter or while running the code examples, you can ask for help on the [official Discord chat](TODO) TODO LINK
+If you face any difficulties while reading the chapter or while trying out the code examples, feel free to ask for assistance via the [official Discord chat](https://discord.com/channels/725613461949906985/1096783084633985074).
+However, make sure to join the [Fastify server](https://discord.gg/fastify) beforehand.
