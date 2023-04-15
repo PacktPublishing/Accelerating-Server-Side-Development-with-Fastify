@@ -1,13 +1,18 @@
 {
-  "name": "chapter-14",
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-14",
   "version": "1.0.0",
-  "description": "",
+  "description": "Accelerate Web Development with Fastify - chapter 14, published by Packt",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "contributors": [
+    "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+    "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+    "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
+  ],
   "license": "MIT",
   "dependencies": {
     "@nearform/sql": "^1.9.2",

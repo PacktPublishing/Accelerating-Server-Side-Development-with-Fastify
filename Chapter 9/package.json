@@ -1,7 +1,8 @@
 {
-  "name": "chapter-9",
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-9",
   "version": "1.0.0",
-  "description": "Application testing",
+  "description": "Accelerate Web Development with Fastify - chapter 9, published by Packt",
+  "private": true,
   "main": "app.js",
   "directories": {
     "test": "test"
@@ -19,7 +20,11 @@
     "mongo:stop": "docker container stop fastify-mongo"
   },
   "keywords": [],
-  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "contributors": [
+    "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+    "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+    "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
+  ],
   "license": "MIT",
   "dependencies": {
     "@fastify/autoload": "^5.0.0",

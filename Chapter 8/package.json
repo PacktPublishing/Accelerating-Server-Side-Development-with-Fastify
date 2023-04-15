@@ -2,10 +2,16 @@
   "name": "@packt/accelerate-web-development-with-fastify-chapter-8",
   "version": "1.0.0",
   "description": "Accelerate Web Development with Fastify - chapter 8, published by Packt",
+  "private": true,
   "main": "app.js",
   "directories": {
     "test": "test"
   },
+  "contributors": [
+    "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+    "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+    "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
+  ],
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",

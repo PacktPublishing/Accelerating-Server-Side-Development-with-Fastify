@@ -1,8 +1,8 @@
 {
-  "name": "chapter-13",
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-13",
   "version": "1.0.0",
+  "description": "Accelerate Web Development with Fastify - chapter 13, published by Packt",
   "private": true,
-  "description": "My first Fastify application",
   "main": "app.js",
   "directories": {
     "test": "test"
@@ -32,7 +32,11 @@
     "clinic:bubble": "clinic bubble --on-port 'autocannon -d 20 -c 100 http://localhost:3000/todos' -- node index.js"
   },
   "keywords": [],
-  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "contributors": [
+    "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+    "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+    "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
+  ],
   "license": "MIT",
   "dependencies": {
     "@fastify/autoload": "^5.3.1",
