@@ -1,18 +1,15 @@
+# Chapter 14 - Developing GraphQL API
 
-# Chapter 1 - What is Fastify?
-
-In this chapter we will learn about the core concepts of Fastify, getting a complete overview of the
-components of the framework.
-You will understand how they work together and how to declare them.
-
-The example we will use is a simple test routes to become confident with the Fastify's syntax and execution, so HAVE FUN!
+In this chapter, you will learn how to incorporate GraphQL into your Fastify application using a specialized plugin.  
+As GraphQL becomes increasingly popular, more and more APIs are being built with this query language.  
+By using Fastify's unique architecture and avoiding common mistakes, you can take full advantage of GraphQL in your application.
 
 ## How to use this folder?
 
 In this folder you will find the source code of the chapter.
 The filenames are the same as the chapter's sections.
 
-You can run the chapter's code examples by executing:
+You can run the chapter's code by starting the application:
 
 ```bash
 node <filename>

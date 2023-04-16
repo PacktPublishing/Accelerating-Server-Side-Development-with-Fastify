@@ -1,12 +1,17 @@
 {
-  "name": "chapter-12",
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-12",
   "version": "1.0.0",
-  "description": "",
+  "description": "Accelerate Web Development with Fastify - chapter 12, published by Packt",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Matteo Collina <hello@matteocollina.com>",
+  "contributors": [
+    "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+    "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+    "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
+  ],
   "license": "MIT",
   "dependencies": {
     "@fastify/autoload": "^5.4.1",
