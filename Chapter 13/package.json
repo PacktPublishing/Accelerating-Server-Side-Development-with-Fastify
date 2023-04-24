@@ -26,10 +26,10 @@
     "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:6",
     "mongo:stop": "docker container stop fastify-mongo",
     "performance:assessment": "autocannon -d 20 -c 100",
-    "clinic:doctor": "clinic doctor --on-port 'autocannon -d 20 -c 100 http://localhost:3000/todos' -- node index.js",
-    "clinic:flame": "clinic flame --on-port 'autocannon -d 20 -c 100 http://localhost:3000/todos-flame' -- node index.js",
-    "clinic:heap": "clinic heap --on-port 'autocannon -d 20 -c 100 http://localhost:3000/todos-heap' -- node index.js",
-    "clinic:bubble": "clinic bubble --on-port 'autocannon -d 20 -c 100 http://localhost:3000/todos' -- node index.js"
+    "clinic:doctor": "clinic doctor --on-port 'autocannon -d 20 -c 100 http://127.0.0.1:3000/todos' -- node index.js",
+    "clinic:flame": "clinic flame --on-port 'autocannon -d 20 -c 100 http://127.0.0.1:3000/todos-flame' -- node index.js",
+    "clinic:heap": "clinic heap --on-port 'autocannon -d 20 -c 100 http://127.0.0.1:3000/todos-heap' -- node index.js",
+    "clinic:bubble": "clinic bubble --on-port 'autocannon -d 20 -c 100 http://127.0.0.1:3000/todos' -- node index.js"
   },
   "keywords": [],
   "contributors": [
