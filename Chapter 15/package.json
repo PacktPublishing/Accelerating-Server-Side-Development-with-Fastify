@@ -1,0 +1,31 @@
+{
+  "name": "@packt/accelerate-web-development-with-fastify-chapter-15",
+  "version": "1.0.0",
+  "description": "Accelerate Web Development with Fastify - chapter 15, published by Packt",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Maksim Sinik <maksim.sinik@gmail.com> (https://github.com/fox1t)",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/autoload": "^5.7.1",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.8.0",
+    "@fastify/type-provider-typebox": "^3.0.0",
+    "fastify": "^4.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "fastify-tsconfig": "^1.0.1",
+    "rimraf": "^5.0.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.4"
+  }
+}
