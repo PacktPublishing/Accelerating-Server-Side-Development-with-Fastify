@@ -1,7 +1,7 @@
 {
-  "name": "@packt/accelerate-web-development-with-fastify-chapter-9",
+  "name": "@packt/accelerating-server-side-development-with-fastifychapter-9",
   "version": "1.0.0",
-  "description": "Accelerate Web Development with Fastify - chapter 9, published by Packt",
+  "description": "Accelerating Server Side Development with Fastify - chapter 9, published by Packt",
   "private": true,
   "main": "app.js",
   "directories": {
@@ -26,6 +26,14 @@
     "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify/issues"
+  },
+  "homepage": "https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify#readme",
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/cors": "^8.0.0",

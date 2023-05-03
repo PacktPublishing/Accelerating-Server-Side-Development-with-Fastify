@@ -1,7 +1,7 @@
 {
-  "name": "@packt/accelerate-web-development-with-fastify-chapter-6",
+  "name": "@packt/accelerating-server-side-development-with-fastifychapter-6",
   "version": "1.0.0",
-  "description": "Accelerate Web Development with Fastify - chapter 6, published by Packt",
+  "description": "Accelerating Server Side Development with Fastify - chapter 6, published by Packt",
   "private": true,
   "main": "app.js",
   "directories": {
@@ -17,6 +17,10 @@
     "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:6",
     "mongo:stop": "docker container stop fastify-mongo"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify.git"
+  },
   "keywords": [],
   "contributors": [
     "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
@@ -24,6 +28,10 @@
     "Matteo Collina <hello@matteocollina.com> (https://github.com/mcollina)"
   ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify/issues"
+  },
+  "homepage": "https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify#readme",
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/cors": "^8.0.0",
