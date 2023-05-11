@@ -32,7 +32,6 @@ The code will look like the following:
   "name": "Foo",
   "hobbies": [ "Soccer", "Scuba" ]
 }
-
 ```
 
 **Following is what you need for this book:**
