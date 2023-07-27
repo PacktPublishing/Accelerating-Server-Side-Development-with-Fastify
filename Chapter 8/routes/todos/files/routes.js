@@ -96,7 +96,7 @@ module.exports = async function fileTodoRoutes (fastify, _opts) {
       return cursor.pipe(csvStringify({
         quoted_string: true,
         header: true,
-        columns: ['title', 'done', 'createdAt', 'updatedAt', 'id'],
+        columns: ['title', 'done', 'createdAt', 'modifiedAt', 'id'],
         cast: {
           boolean: (value) => value ? 'true' : 'false',
           date: (value) => value.toISOString()
