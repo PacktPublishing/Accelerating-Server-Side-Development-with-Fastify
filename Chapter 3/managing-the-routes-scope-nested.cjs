@@ -26,7 +26,7 @@ async function rootChildPlugin (plugin) {
 }
 async function childPlugin (plugin) {
   plugin.addHook('onRequest', function adminHook (request, reply, done) {
-    if (!request.isAdmin) {
+    if (!request.user.isAdmin) {
       done(new Error('You are not an admin'))
       return
     }
