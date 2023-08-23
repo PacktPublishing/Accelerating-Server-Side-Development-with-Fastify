@@ -12,7 +12,7 @@ app.addHook('onClose', function forEver (instance, done) {
 })
 
 process.once('SIGINT', async function closeApplication () {
-  const tenSeconds = 6000
+  const tenSeconds = 10_000
   const timeout = setTimeout(function forceClose () {
     app.log.error('force closing server')
     process.exit(1)
