@@ -2,12 +2,11 @@
 
 const fp = require('fastify-plugin')
 const fastifySwagger = require('@fastify/swagger')
+const fastifySwaggerUi = require('@fastify/swagger-ui')
 const pkg = require('../package.json')
 
 module.exports = fp(async function swaggerPlugin (fastify, opts) {
   fastify.register(fastifySwagger, {
-    routePrefix: '/docs',
-    exposeRoute: fastify.secrets.NODE_ENV !== 'production',
     swagger: {
       info: {
         title: 'Fastify app',
@@ -15,5 +14,9 @@ module.exports = fp(async function swaggerPlugin (fastify, opts) {
         version: pkg.version
       }
     }
+  })
+  fastify.register(fastifySwaggerUi, {
+    routePrefix: '/docs',
+    exposeRoute: fastify.secrets.NODE_ENV !== 'production'
   })
 }, { dependencies: ['application-config'] })
