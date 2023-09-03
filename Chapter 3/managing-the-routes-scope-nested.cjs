@@ -8,7 +8,7 @@ const app = fastify({
 // curl --location --request GET 'http://localhost:8080/onlyAdmin' --header 'level: 50'
 app.addHook('onRequest', function parseUserHook (request, reply, done) {
   const level = parseInt(request.headers.level) || 0
-  request.user = { level, isAdmin: level === 42 }
+  request.user = { level, isAdmin: level >= 100 }
   done()
 })
 app.get('/public', handler)
