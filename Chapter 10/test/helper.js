@@ -4,7 +4,7 @@
 // between our tests.
 const fcli = require('fastify-cli/helper')
 
-const startArgs = '-l silent --options app.js'
+const startArgs = ['-l silent --options app.js']
 
 const defaultEnv = {
   NODE_ENV: 'test',
