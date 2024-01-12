@@ -19,7 +19,7 @@ app.addHook('onReady', async function preLoading () {
   console.log('async onReady')
   // the done argument is gone!
 })
-app.addHook('onClose', function manageClose (done) {
+app.addHook('onClose', function manageClose (app, done) {
   console.log('onClose')
   done()
 })
