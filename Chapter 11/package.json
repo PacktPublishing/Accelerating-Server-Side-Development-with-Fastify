@@ -32,10 +32,10 @@
   "homepage": "https://github.com/PacktPublishing/Accelerating-Server-Side-Development-with-Fastify#readme",
   "dependencies": {
     "fastify": "^4.2.0",
-    "pino": "^7.6.5"
+    "pino": "^8.4.1"
   },
   "devDependencies": {
-    "pino-pretty": "^7.5.1",
+    "pino-pretty": "^8.1.0",
     "standard": "^16.0.4",
     "tap": "^15.0.9"
   }
